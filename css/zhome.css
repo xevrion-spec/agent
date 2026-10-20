@@ -1,0 +1,87 @@
+/* ---------------------------------------------------------------- homepage (xw/pages/ops_home.py)
+   Seven sections, each answering one question. One bold element (the app window in the hero); everything below it is
+   type, hairlines and one accent. Colour carries meaning only: violet = the one accent (the popular plan), green dot =
+   counted, grey = states, amber = a person is needed. Loaded last, so it also holds two site-wide corrections. */
+
+/* sentence case everywhere: no all-caps eyebrows */
+.eyebrow{text-transform:none!important;letter-spacing:0!important}
+
+/* what is Xevrion: the direct answer beside the parts of the app */
+.hm-what__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(32px,6vw,96px);align-items:start}
+.hm-what h2{margin:0 0 var(--s-5)}
+.hm-answer{margin:0;max-width:40ch;font-size:var(--fs-lead);line-height:1.55;color:var(--text-2)}
+.hm-parts{list-style:none;margin:0;padding:0;border-bottom:1px solid var(--line-2)}
+.hm-parts li{border-top:1px solid var(--line-2)}
+.hm-parts a{display:grid;grid-template-columns:8.5rem minmax(0,1fr);gap:var(--s-4);align-items:baseline;padding:15px 4px;color:var(--text-2);text-decoration:none;transition:background var(--t-micro) var(--ease)}
+.hm-parts a:hover,.hm-parts a:focus-visible{background:var(--glass-ambient)}
+.hm-parts a:hover b,.hm-parts a:focus-visible b{text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--line-4)}
+.hm-parts b{font-weight:500;color:var(--text-1)}
+
+/* where time and risk go */
+.hm-ev h2{margin:0 0 var(--s-6)}
+.hm-ev__row{margin-bottom:var(--s-4)}
+
+/* you stay in charge: three plain points beside three rows of the Ledger */
+.hm-ctl__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(32px,6vw,96px);align-items:center}
+.hm-ctl h2{margin:0 0 var(--s-5)}
+.hm-ctl__list{list-style:none;margin:0;padding:0;display:grid;gap:var(--s-4)}
+.hm-ctl__list li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:var(--s-3);color:var(--text-2)}
+.hm-ctl__list svg{margin-top:4px;color:var(--text-3)}
+.hm-ctl__list b{font-weight:500;color:var(--text-1)}
+.hm-led{margin:0;padding:var(--s-5);border:1px solid var(--glass-interface-line);border-radius:var(--r-4);background:var(--glass-interface)}
+.hm-led figcaption{display:flex;justify-content:space-between;gap:var(--s-3);flex-wrap:wrap;margin-bottom:var(--s-3);font-weight:500;color:var(--text-1)}
+.hm-led figcaption .quiet{font-weight:400;font-size:13px}
+.hm-led__rows{list-style:none;margin:0;padding:0}
+.hm-led__r{display:grid;grid-template-columns:minmax(0,1fr) auto 6.5rem;gap:var(--s-4);align-items:center;padding:12px 0;border-top:1px solid var(--line-1);color:var(--text-2);font-size:var(--fs-small)}
+.hm-led__r b{font-weight:500;color:var(--text-1)}
+.hm-led__r--estimated b{color:var(--text-3)}
+.hm-tag{display:inline-flex;align-items:center;gap:6px;justify-self:start;font-size:12.5px;color:var(--text-2)}
+.hm-tag::before{content:"";width:7px;height:7px;border-radius:50%}
+.hm-tag--measured::before{background:var(--ok)}
+.hm-tag--estimated::before{border:1px dashed var(--text-3)}
+.hm-led__key{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin:var(--s-3) 0 0;padding-top:var(--s-3);border-top:1px solid var(--line-1);font-size:13px;color:var(--text-3)}
+
+/* pricing: one strip divided by hairlines, the popular plan marked by the one accent */
+.hm-pr__row{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line-2);border-radius:var(--r-4);overflow:hidden}
+.hm-pr__row li+li{border-left:1px solid var(--line-2)}
+.hm-pr__row a{display:flex;flex-direction:column;gap:6px;height:100%;padding:var(--s-5);color:var(--text-2);text-decoration:none;transition:background var(--t-micro) var(--ease)}
+.hm-pr__row a:hover,.hm-pr__row a:focus-visible{background:var(--glass-ambient)}
+.hm-pr__row b{font-weight:500;color:var(--text-1)}
+.hm-pr__row .is-pop{box-shadow:inset 0 2px 0 var(--violet-500);background:var(--violet-wash)}
+.hm-pop{font-size:12.5px;color:var(--violet-200)}
+.hm-price{font-size:var(--fs-metric-s);line-height:1.1;color:var(--text-1);letter-spacing:-.01em}
+.hm-price small{font-size:14px;color:var(--text-3);letter-spacing:0}
+.hm-pr__foot{margin:var(--s-4) 0 0}
+.hm-pr__foot a{color:var(--text-1);text-underline-offset:4px;text-decoration-color:var(--line-4)}
+
+/* before you start: four answers beside the start button */
+.hm-close__grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(32px,6vw,96px);align-items:start}
+.hm-close h2{margin:0 0 var(--s-5)}
+.hm-close__go{padding:var(--s-6);border:1px solid var(--glass-intel-line);border-radius:var(--r-4);background:var(--glass-intel)}
+.hm-close__h{margin:0 0 var(--s-2);font-size:var(--fs-h4);font-weight:500;color:var(--text-1)}
+.hm-close__go .quiet{margin:0 0 var(--s-5)}
+.hm-close__go .hero__note{margin-top:var(--s-4)}
+.hm-close__alt{margin:var(--s-4) 0 0;font-size:14.5px;color:var(--text-2)}
+
+@media (max-width:900px){
+  .hm-what__grid,.hm-ctl__grid,.hm-close__grid{grid-template-columns:1fr}
+  .hm-pr__row{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hm-pr__row li:nth-child(3){border-left:0}
+  .hm-pr__row li:nth-child(n+3){border-top:1px solid var(--line-2)}
+}
+@media (max-width:520px){
+  .hm-parts a{grid-template-columns:1fr;gap:2px}
+  .hm-pr__row{grid-template-columns:1fr}
+  .hm-pr__row li+li{border-left:0;border-top:1px solid var(--line-2)}
+  .hm-led__r{grid-template-columns:minmax(0,1fr) auto;row-gap:4px}
+  .hm-led__r .hm-tag{grid-column:1/-1}
+}
+
+/* the hero window's first paint is short; the animation fills the heading and labels as it plays */
+.xh-h:empty,.xh-labs:empty{display:none}
+
+/* story steps without a time stamp: the title takes the whole row */
+.sty__go > b:first-child{grid-column:1/-1}
+.hm-pr__nm{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s-3)}
+.hm-ev .src{display:inline-flex;align-items:center;gap:5px}
+.hm-ev .src svg{flex:none}

@@ -1,0 +1,42 @@
+/* Free tools, templates, sector pages and the customer quotes slot (xw/pages/ops_tools.py, ops_sectors.py,
+   xw/conversion.py proof_slot). Tokens only: both themes and the palette come from xevrion.css. */
+
+/* the late payment interest calculator */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,48px);padding:clamp(20px,3vw,36px);border-radius:var(--r-4)}
+.calc__in{display:grid;gap:var(--s-4);align-content:start}
+.calc__in .hint{font-size:13.5px;color:var(--text-3);margin-top:6px}
+.calc__in .hint a{color:var(--text-2)}
+.calc__in .btn{justify-self:start}
+.calc__out{align-self:start}
+.calc__res{display:grid;gap:0;margin:0}
+.calc__res>div{display:flex;justify-content:space-between;gap:var(--s-4);padding:12px 0;border-bottom:1px solid var(--line-2)}
+.calc__res dt{color:var(--text-2)}
+.calc__res dd{margin:0;color:var(--text-1);font-weight:600;text-align:right}
+.calc__res>div:last-child dd{font-size:var(--fs-h4)}
+.calc [hidden],.tpl [hidden],.proof[hidden]{display:none}
+@media (max-width:860px){.calc{grid-template-columns:minmax(0,1fr)}}
+
+/* copyable templates */
+.tpl-list{display:grid;gap:clamp(28px,4vw,48px)}
+.tpl{max-width:78ch;scroll-margin-top:calc(var(--nav-h) + 24px)}
+.tpl__when{color:var(--text-2);margin-top:var(--s-2)}
+.tpl__text{margin:var(--s-4) 0 0;padding:var(--s-5);white-space:pre-wrap;word-break:break-word;font-family:var(--font);font-size:15px;line-height:1.6;
+  color:var(--text-1);background:var(--bg-2);border:1px solid var(--line-2);border-radius:var(--r-3)}
+.tpl__text:focus-visible{outline:2px solid var(--violet-400);outline-offset:2px}
+.tpl__bar{display:flex;align-items:center;flex-wrap:wrap;gap:var(--s-3);margin-top:var(--s-3)}
+.tpl__status{font-size:13.5px;color:var(--text-3)}
+
+/* customer quotes near a call to action: filled by proof.js, otherwise hidden and empty */
+.proof{margin:var(--s-6) 0 0}
+.proof__h{display:block;margin-bottom:var(--s-3)}
+.proof__list{list-style:none;margin:0;padding:0;display:grid;gap:var(--s-4)}
+.proof__item{padding:var(--s-4) var(--s-5);border-left:2px solid var(--violet-400);background:var(--bg-2);border-radius:0 var(--r-3) var(--r-3) 0}
+.proof__q{margin:0}
+.proof__q p{margin:0;color:var(--text-1);line-height:1.6}
+.proof__who{margin-top:var(--s-2);font-size:13.5px;color:var(--text-3)}
+
+/* sector pages and comparisons */
+.sector-services,.sector-trust{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.sector-services .label{display:block;margin-bottom:6px}
+.sector-fact{margin-top:var(--s-5)}
+.compare-not{margin-top:var(--s-6);max-width:78ch}

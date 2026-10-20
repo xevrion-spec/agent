@@ -1,0 +1,26 @@
+/* ---------------------------------------------------------------- Answers (xw/pages/ops_answers.py)
+   One question a page: the short answer first, a few short sections, the sources and when they were last checked.
+   Figures are plain bars (charts.share_bars): grey for the whole, white for the published figure, labels beside them. */
+.ans-head .answer-block{margin-top:clamp(24px,3vw,36px);max-width:68ch}
+.ans-head .answer-block p{font-size:clamp(17px,1.35vw,19px);line-height:1.55}
+.ans{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:clamp(32px,6vw,96px);align-items:start}
+.ans .prose>h2:first-child{margin-top:0}
+.ans-fig{max-width:520px;margin:var(--s-6) 0;padding:clamp(16px,2.4vw,24px);border:1px solid var(--line-2);border-radius:var(--r-3);background:var(--bg-1)}
+.ans-fig .chart{display:block;max-width:460px}
+.ans-fig figcaption{margin-top:var(--s-3);font-size:13.5px;line-height:1.5;color:var(--text-3)}
+.ans-fig figcaption .src{display:inline-flex;align-items:center;gap:5px;color:var(--text-3)}
+.ans-qa{margin-top:var(--s-7)}
+.ans-qa h2{font-size:var(--fs-h3);margin-bottom:var(--s-4)}
+.ans-sources{margin-top:var(--s-7);padding-top:var(--s-5);border-top:1px solid var(--line-2)}
+.ans-sources h2{font-size:var(--fs-h4);margin:0 0 var(--s-3)}
+.ans-sources ol{display:grid;gap:var(--s-2);padding-left:22px;list-style:decimal;font-size:14.5px;color:var(--text-3)}
+.ans-sources li::marker{color:var(--text-4);font-variant-numeric:tabular-nums}
+.ans-sources a{color:var(--text-1)}
+.ans-checked{margin-top:var(--s-4);font-size:13.5px;color:var(--text-3)}
+.ans-aside{position:sticky;top:96px;display:grid;gap:var(--s-6)}
+.ans-aside .label{display:block;margin-bottom:var(--s-3)}
+.ans-topic+.ans-topic{margin-top:var(--s-7)}
+.ans-topic h2{font-size:var(--fs-h3);margin-bottom:var(--s-4)}
+/* on phones the drawing is scaled down, so its words are set larger to stay readable */
+@media (max-width:600px){.ans-fig .chart text{font-size:18px}.ans-fig .chart .t-strong{font-size:20px}}
+@media (max-width:1023px){.ans{grid-template-columns:minmax(0,1fr)}.ans-aside{position:static}}

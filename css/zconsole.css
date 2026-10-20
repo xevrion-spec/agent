@@ -1,0 +1,76 @@
+/* ============================================================================================================
+   Homepage window (xw/hero_app.py, src/js/viz-hero.js): the REAL portal app on the example company, in the same frame
+   as /customer-portal (pages.css .portal-frame), with a five-stop tour bar above it and the stop's caption under it.
+   Nothing here draws the app: the app brings its own stylesheet (portal.css, synced from the gateway). The tour bar
+   follows 13C's tokens (logs/13-design-tokens.md): one purple #7357ff, purple ink #b3a6ff, neutral line #3a3d44 and ink
+   #c9ced6, 1px opaque hairlines, whole-pixel type. The progress line is the only thing that moves.
+   ============================================================================================================ */
+.hx{position:relative;z-index:3;text-align:left;box-shadow:0 40px 120px -40px rgba(0,0,0,.9)}
+.hx-live{display:flex;flex-direction:column}
+.hx-tour{display:flex;align-items:stretch;height:48px;border-bottom:1px solid #24262b;background:#0f0f11;overflow-x:auto;scrollbar-width:none}
+.hx-tour::-webkit-scrollbar{display:none}
+.hx-stop{position:relative;display:inline-flex;align-items:center;gap:8px;flex:none;margin:0;padding:0 16px;border:0;border-right:1px solid #24262b;background:none;
+  color:var(--text-3);font:500 13px/20px var(--font);white-space:nowrap;cursor:pointer;transition:color .15s,background-color .15s}
+.hx-stop b{display:inline-grid;place-items:center;box-sizing:border-box;width:20px;height:20px;border:1px solid #3a3d44;border-radius:10px;color:#c9ced6;
+  font:500 12px/18px var(--font);font-variant-numeric:tabular-nums}
+.hx-stop i{position:absolute;left:0;right:0;bottom:0;height:2px;background:#7357ff;transform:scaleX(var(--k,0));transform-origin:0 50%}
+.hx-stop:hover{color:var(--text-1);background:#131416}
+.hx-stop[aria-current=true]{color:var(--text-1);background:#151619}
+.hx-stop[aria-current=true] b{border-color:#7357ff;color:#b3a6ff}
+.hx-stop:focus-visible,.hx-pp:focus-visible{outline:2px solid #7357ff;outline-offset:-2px}
+.hx-pp{display:inline-flex;align-items:center;gap:6px;flex:none;align-self:center;height:32px;margin:0 8px 0 auto;padding:0 12px;border:1px solid #3a3d44;border-radius:8px;
+  background:#131416;color:var(--text-1);font:500 13px/20px var(--font);cursor:pointer}
+.hx-pp:hover{border-color:#4a4e57;background:#1a1b1f}
+.hx-pp .xg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.hx-pp__play{display:none}.hx-pp[aria-pressed=true] .hx-pp__play{display:block}.hx-pp[aria-pressed=true] .hx-pp__pause{display:none}
+/* the whole window (bar, tour, app, caption) fits under the site header on a laptop screen */
+.hx-screen{height:clamp(560px,calc(100vh - 270px),760px)}
+.hx-load{display:flex;align-items:center;justify-content:center;gap:10px;height:100%;margin:0;max-width:none;color:var(--text-3);font-size:14px;line-height:20px}
+.hx-load__dot{width:8px;height:8px;border-radius:4px;background:#7357ff;animation:hx-pulse 1.2s ease-in-out infinite}
+@keyframes hx-pulse{50%{opacity:.35}}
+.hx-cap{box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;height:52px;margin:0;padding:0 18px;border-top:1px solid #24262b;background:#0f0f11;
+  font-size:14px;line-height:20px;color:var(--text-1);overflow:hidden}
+.hx-cap__k{color:var(--text-3);font-size:13px}
+.hx-cap__t{flex:1 1 360px;min-width:0}
+.hx-cap__more{display:inline-flex;align-items:center;gap:6px;color:#b3a6ff;font-weight:500;text-decoration:none}
+.hx-cap__more:hover{color:#fff}
+.hx-cap__more svg{width:14px;height:14px}
+@media (max-width:1180px){.hx-cap{height:72px;padding:12px 18px}.hx-cap__k{display:none}}
+@media (max-width:760px){
+  .hx-stop{gap:0;padding:0 12px}
+  .hx-stop span{display:none}
+  .hx-stop[aria-current=true]{gap:8px}
+  .hx-stop[aria-current=true] span{display:inline}
+  .hx-pp span{display:none}
+  .hx-pp{width:32px;padding:0;justify-content:center}
+  .hx-screen{height:clamp(520px,calc(100svh - 300px),680px)}
+  .hx-cap{height:92px;padding:12px 16px;font-size:13px}
+  .hx-cap__more{font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){.hx-load__dot{animation:none}.hx-stop i{transition:none}}
+@media (forced-colors:active){.hx-stop i{background:Highlight}.hx-stop[aria-current=true]{outline:2px solid Highlight;outline-offset:-2px}}
+
+/* ============================================================================================================
+   /customer-portal: the tour rail above the real app (viz-portal.js), and the CTA band under it
+   ============================================================================================================ */
+.tr{display:grid;gap:10px;margin:0 0 14px}
+.tr-rail{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.tr-grp{margin:0 4px 0 0;font:500 var(--fs-label,12px)/1 var(--mono,monospace);color:var(--text-3)}
+.tr-grp--more{margin-left:10px}
+.tr-tab{display:inline-flex;align-items:center;gap:7px;min-height:36px;padding:0 13px;border:1px solid var(--line-2,rgba(255,255,255,.12));border-radius:8px;background:rgba(255,255,255,.03);
+  color:var(--text-2);font:500 13.5px/1 var(--font,inherit);cursor:pointer;transition:background-color .15s,color .15s,border-color .15s}
+.tr-tab:hover{background:rgba(255,255,255,.06);color:var(--text-1)}
+.tr-tab[aria-pressed=true]{border-color:rgba(115,87,255,.7);background:rgba(115,87,255,.14);color:var(--text-1)}
+.tr-tab svg{width:16px;height:16px}
+.tr-tab:focus-visible{outline:2px solid var(--violet-200);outline-offset:2px}
+.tr-look{max-width:none;display:flex;gap:10px;align-items:baseline;min-height:2.9em;margin:0;padding:10px 14px;border:1px solid var(--line,rgba(255,255,255,.08));border-radius:10px;background:rgba(255,255,255,.02);font-size:14.5px;color:var(--text-1)}
+.tr-look b{flex:none;font:500 12px/1 var(--mono,monospace);color:var(--violet-200)}
+.tr-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-top:16px;padding:18px 20px;border:1px solid var(--line,rgba(255,255,255,.08));border-radius:12px;background:rgba(255,255,255,.025)}
+.tr-cta p{margin:0;max-width:52ch;color:var(--text-2)}
+.tr-cta p b{display:block;margin-bottom:2px;color:var(--text-1);font-size:17px}
+.tr-cta .hero__cta{margin:0}
+@media (max-width:760px){
+  .tr-rail{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+  .tr-tab{flex:none}
+  .tr-grp--more{margin-left:6px}
+}

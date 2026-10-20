@@ -1,0 +1,436 @@
+/* ============================================================================================================
+   Cycle 24 (24A): calm, precise, editorial. Henry, 17 Oct: "refine and get rid of the tacky tech AI look end to end ...
+   make all visuals way more effortless and quality ... an enterprise layout of refined and efficient visuals and text".
+   Reference feel: Stripe Docs, Linear, Ramp, Mercury.
+
+   What this sheet does, and why it is last in the cascade (src/css is concatenated by name, so zz-24a wins):
+   - one typeface (Geist) for everything, small labels included: --mono now points at it;
+   - no gradient washes, glows, glass, blur or decorative shadows anywhere on the marketing pages;
+   - hierarchy by type and alignment: a section is a heading, one lead line and its facts; text sections are laid out
+     editorially (heading left, facts right: .a24-split, xw/site17.py sec(split=True));
+   - hairlines only where they separate information; a box (1px line, 10px radius, flat surface) only for the things a
+     visitor uses or reads as one object: the example workspace, the flagship, the step cards, the price plans;
+   - the step-by-step flow (xw/plain.py steps): numbered cards joined in reading order, each with its real record;
+   - motion only when the visitor acts (the flagship's own controls); nothing animates by itself.
+   Purple stays the only accent (brief 14): links, the "You" step marker and focus rings. Labels keep their tones.
+   ============================================================================================================ */
+:root{
+  --mono:var(--font);
+  --shadow-1:none; --shadow-2:none; --shadow-3:none;
+  --blur-1:none; --blur-2:none; --blur-nav:none;
+  --glass-intel:var(--bg-1); --glass-elevated:var(--bg-1); --glass-nav:rgba(15,15,17,.98); --glass-modal:#121214;
+  --violet-glow:transparent; --violet-wash:transparent;
+  --chrome:linear-gradient(var(--text-1),var(--text-1)); --chrome-soft:linear-gradient(var(--text-1),var(--text-1));
+  --a24-surface:#131316; --a24-line:var(--line-2); --a24-r:10px;
+}
+
+/* ---- type: one family, one scale ------------------------------------------------------------------------------ */
+.hero h1,.display{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--text-1)}
+.a17-h1{margin-top:0;font:600 clamp(40px,5.2vw,64px)/1.04 var(--font);letter-spacing:-.032em}
+.a17-h1--s{font-size:clamp(36px,4.4vw,52px)}
+.a17-line{margin-top:20px;max-width:600px;font:400 clamp(17px,1.35vw,19px)/1.55 var(--font);color:var(--text-2)}
+.a17-crumbs{margin-bottom:32px}
+.a17-head{max-width:720px;margin-bottom:clamp(28px,3.4vw,40px)}
+.a17-head h2{font:600 clamp(26px,2.5vw,34px)/1.15 var(--font);letter-spacing:-.022em;color:var(--text-1)}
+.a17-head p{margin-top:12px;max-width:600px;font:400 16px/1.6 var(--font);color:var(--text-2)}
+.a17-kicker,.a23-kicker,.a17-eyebrow{display:none}
+.num{font-variant-numeric:tabular-nums}
+.btn--secondary{background:transparent;border:1px solid var(--line-3)}
+.btn--secondary:hover{border-color:var(--line-4);background:rgba(255,255,255,.03)}
+.a17-cta__note{display:block;margin-top:16px;font:400 13px/1.5 var(--font);color:var(--text-3)}
+
+/* ---- sections: one hairline between them, no washes ---------------------------------------------------------- */
+.a17-hero,.a17-sec,.a17-sec--lab,.avx-sec--flag,.a17-close,.a17-sec--fact{background:none}
+.a17-hero::before,.a17-hero::after,.a17-close::before,.a17-close::after,.a17-sec::before,.a17-sec::after{content:none;display:none}
+.a17-sec{border-top:1px solid var(--line-1)}
+.a17-sec--tight{padding:clamp(56px,6vw,88px) 0}
+.a17-close{border-top:1px solid var(--line-1)}
+.a17-next{gap:24px;margin-top:28px}
+.a17-next a{height:auto;padding:0;border:0;border-radius:0;color:var(--text-2);font:400 14px/1.5 var(--font);text-decoration:underline;text-decoration-color:var(--line-4);text-underline-offset:4px}
+.a17-next a:hover{color:var(--text-1)}
+.a17-next a svg{display:none}
+.a17-close .a17-cta__note{margin-top:16px;font-size:13px;color:var(--text-3)}
+
+/* editorial split: heading and lead on the left, the facts on the right (text sections only; visuals keep the width) */
+.a24-split>.wrap{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);column-gap:clamp(40px,6vw,96px);align-items:start}
+.a24-split>.wrap>*{grid-column:2;min-width:0}
+.a24-split>.wrap>.a17-head{grid-column:1;grid-row:1 / span 6;margin:0;padding-top:2px}
+.a24-split>.wrap>.a17-head h2{font-size:clamp(24px,2.1vw,30px)}
+.a24-split>.wrap>.a17-head p{font-size:15px}
+.a24-split .pl-spec{grid-template-columns:minmax(0,1fr)}
+.a24-split .pl-spec__r:nth-child(odd),.a24-split .pl-spec__r:nth-child(even){padding-left:0;padding-right:0;border-left:0}
+.a24-split .pl-checks{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:40px}
+.a24-split .pl-faq{grid-template-columns:minmax(0,1fr)}
+.a24-split .a17-facts{grid-template-columns:minmax(0,1fr)}
+@media (max-width:960px){
+  .a24-split>.wrap{display:block}
+  .a24-split>.wrap>.a17-head{margin-bottom:28px}
+}
+
+/* ---- hero proof figures (agent pages): type on a hairline, not a box ----------------------------------------- */
+.avx-proof{border:0;border-radius:0;background:none;box-shadow:none;border-top:1px solid var(--line-2)}
+.avx-proof li{background:none;border:0;padding:16px 24px 0 0}
+.avx-proof li+li{border-left:0}
+.avx-proof li::before{content:none}
+.avx-proof b{font-weight:500;letter-spacing:-.02em}
+
+/* ---- tables: no box, hairline rows -------------------------------------------------------------------------- */
+.pl-tw{border:0;border-radius:0;background:none;box-shadow:none;border-top:1px solid var(--line-3)}
+.pl-t thead th{background:none;padding:12px 24px 12px 0;color:var(--text-3)}
+.pl-t th,.pl-t td{padding:14px 24px 14px 0;border-bottom:1px solid var(--line-1)}
+.pl-t th:last-child,.pl-t td:last-child{padding-right:0}
+.pl-t tbody tr:last-child>*{border-bottom:1px solid var(--line-1)}
+.pl-t tbody tr:hover>*{background:none}
+.pl-t tbody th{font-weight:500}
+.pl-plan{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+/* ---- spec sheets, checks, figures, questions ---------------------------------------------------------------- */
+.pl-spec{border-top:1px solid var(--line-3)}
+.pl-spec__r{padding:16px 0;border-bottom:1px solid var(--line-1)}
+.pl-spec dt{font-size:14px;line-height:22px;color:var(--text-2)}
+.pl-spec dd{font-size:15px;line-height:22px}
+.pl-checks{border-top:1px solid var(--line-3)}
+.pl-checks li{padding:18px 24px 18px 0;border:0;border-bottom:1px solid var(--line-1);background:none;box-shadow:none;border-radius:0}
+.pl-checks b{font-size:15px}
+.pl-checks p{color:var(--text-2)}
+.pl-figs{border:0;border-radius:0;border-top:1px solid var(--line-3)}
+.pl-figs li{padding:18px 24px 0 0;border:0;background:none;box-shadow:none}
+.pl-figs li+li{border-left:0}
+.pl-figs b{font-size:30px;letter-spacing:-.02em}
+.pl-faq{border-top:1px solid var(--line-3)}
+.pl-q{border:0;border-bottom:1px solid var(--line-1);border-radius:0;background:none;box-shadow:none}
+.pl-q summary{padding:18px 4px 18px 0}
+.pl-more--list{color:var(--text-3)}
+.pl-more--list a{color:var(--violet-200)}
+.avx-faq{display:block;border-top:1px solid var(--line-3)}
+.avx-q,.avx-q[open]{border:0;border-bottom:1px solid var(--line-1);border-radius:0;background:none;box-shadow:none}
+.avx-q summary{padding:18px 4px 18px 0;font:500 15px/1.4 var(--font)}
+.avx-q p{padding:0 0 18px;max-width:var(--measure);font-size:15px}
+.avx-q summary:focus-visible{border-radius:4px;outline-offset:2px}
+
+/* ---- published facts: a figure, what it means and its source, on hairlines ---------------------------------- */
+.a17-facts{gap:0;border-top:1px solid var(--line-3)}
+.a17-fact{position:relative;display:grid;grid-template-columns:minmax(120px,180px) minmax(0,1fr);grid-template-rows:auto auto;column-gap:24px;row-gap:6px;
+  padding:20px 0;border:0;border-bottom:1px solid var(--line-1);border-radius:0;background:none;box-shadow:none}
+.a17-fact::before,.a17-fact::after{content:none}
+.a17-fact__v{grid-row:1 / span 2;background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--text-1);
+  font:500 30px/1.1 var(--font);letter-spacing:-.02em}
+.a17-fact__t{font-size:15px;line-height:1.5;color:var(--text-1)}
+.a17-fact__s{font-size:13px;line-height:1.5;color:var(--text-3)}
+.a17-fact__s a{color:var(--text-2)}
+@media (max-width:600px){.a17-fact{grid-template-columns:minmax(0,1fr)}.a17-fact__v{grid-row:auto}}
+
+/* ---- price plans (home, pricing): flat, one line each, the popular plan marked by its border alone ------------ */
+.a17-plan{background:var(--a24-surface);box-shadow:none;border:1px solid var(--line-2);border-radius:var(--a24-r)}
+.a17-plan:hover{box-shadow:none;border-color:var(--line-3)}
+.a17-plan.is-pop{background:var(--a24-surface);border-color:var(--xp-purple,#5d3fe0)}
+.a17-extras{gap:0;margin-top:20px;border-top:1px solid var(--line-2)}
+.a17-extra{flex-direction:row;align-items:baseline;justify-content:space-between;gap:12px;padding:16px 24px 0 0;border:0;border-radius:0;background:none}
+.a17-extra b{font-size:18px;font-weight:500}
+.a17-extra span{order:-1;color:var(--text-2);font-weight:400}
+
+/* ---- the step-by-step flow (xw/plain.py steps) -------------------------------------------------------------- */
+.pl-flow{position:relative}
+.pl-flow__l{display:grid;grid-template-columns:repeat(var(--n,5),minmax(0,1fr));gap:24px;margin:0;padding:0;list-style:none;counter-reset:none}
+.pl-fs{position:relative;display:flex;flex-direction:column;min-width:0;padding:20px 20px 22px;border:1px solid var(--line-2);border-radius:var(--a24-r);background:var(--a24-surface)}
+/* the connector: a hairline from this card to the next, level with the step number, ending in a small open chevron */
+.pl-fs:not(:last-child)::after{content:"";position:absolute;top:33px;right:-24px;width:23px;height:1px;background:var(--line-4)}
+.pl-fs:not(:last-child)::before{content:"";position:absolute;top:30px;right:-24px;width:6px;height:6px;border-top:1px solid var(--line-4);border-right:1px solid var(--line-4);transform:rotate(45deg)}
+.pl-fs__h{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:26px}
+.pl-fs__n{display:inline-grid;place-items:center;flex:none;width:26px;height:26px;border:1px solid var(--line-4);border-radius:50%;font:500 12px/1 var(--font);color:var(--text-1)}
+.pl-fs--you .pl-fs__n{border-color:#5d3fe0;color:#a796f8}
+.pl-fs__w{display:flex;justify-content:flex-end;min-width:0}
+.pl-fs__t{margin:18px 0 0;font:600 15.5px/1.35 var(--font);letter-spacing:-.005em;color:var(--text-1)}
+.pl-fs__x{margin:6px 0 0;font:400 14px/1.5 var(--font);color:var(--text-2)}
+.pl-fs__r{display:grid;gap:10px;margin:18px 0 0;padding-top:14px;border-top:1px solid var(--line-1)}
+.pl-fs__r>div{display:grid;gap:2px;min-width:0}
+.pl-fs__r dt{font:400 12px/1.4 var(--font);color:var(--text-3)}
+.pl-fs__r dd{margin:0;font:500 13.5px/1.4 var(--font);font-variant-numeric:tabular-nums;color:var(--text-1);overflow-wrap:anywhere}
+.pl-fs__v{margin:auto 0 0;padding-top:16px;font:400 13px/1.45 var(--font);color:var(--text-2)}
+.pl-fs__r+.pl-fs__v{margin-top:16px;border-top:1px solid var(--line-1)}
+.pl-fs__v b{display:block;margin-bottom:2px;font:500 20px/1.2 var(--font);letter-spacing:-.015em;color:var(--text-1)}
+
+/* stacked: more than six steps, or a screen too narrow for the row. The number and the actor head each card, the
+   record sits beside the words, and one hairline joins the numbers down the left. */
+.pl-flow[data-layout=stack] .pl-flow__l{grid-template-columns:minmax(0,1fr);gap:12px}
+.pl-flow[data-layout=stack] .pl-fs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-auto-rows:min-content;column-gap:40px;padding:20px 24px}
+.pl-flow[data-layout=stack] .pl-fs__h{grid-column:1;justify-content:flex-start;gap:12px}
+.pl-flow[data-layout=stack] .pl-fs__w{justify-content:flex-start}
+.pl-flow[data-layout=stack] .pl-fs__t{margin-top:14px;grid-column:1}
+.pl-flow[data-layout=stack] .pl-fs__x,.pl-flow[data-layout=stack] .pl-fs__v{grid-column:1}
+.pl-flow[data-layout=stack] .pl-fs__r{grid-column:2;grid-row:1 / span 5;margin:0;padding:0;border:0;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));align-content:start}
+.pl-flow[data-layout=stack] .pl-fs__r+.pl-fs__v{border-top:0}
+.pl-flow[data-layout=stack] .pl-fs:not(:last-child)::after{top:46px;left:33px;right:auto;bottom:-13px;width:1px;height:auto}
+.pl-flow[data-layout=stack] .pl-fs:not(:last-child)::before{content:none}
+@media (max-width:1180px){
+  .pl-flow__l{grid-template-columns:minmax(0,1fr);gap:12px}
+  .pl-fs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-auto-rows:min-content;column-gap:40px;padding:20px 24px}
+  .pl-fs__h{grid-column:1;justify-content:flex-start;gap:12px}
+  .pl-fs__w{justify-content:flex-start}
+  .pl-fs__t{margin-top:14px;grid-column:1}
+  .pl-fs__x,.pl-fs__v{grid-column:1}
+  .pl-fs__r{grid-column:2;grid-row:1 / span 5;margin:0;padding:0;border:0;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));align-content:start}
+  .pl-fs__r+.pl-fs__v{border-top:0}
+  .pl-fs:not(:last-child)::after{top:46px;left:33px;right:auto;bottom:-13px;width:1px;height:auto}
+  .pl-fs:not(:last-child)::before{content:none}
+}
+@media (max-width:700px){
+  .pl-fs,.pl-flow[data-layout=stack] .pl-fs{grid-template-columns:minmax(0,1fr);padding:18px}
+  .pl-fs__r,.pl-flow[data-layout=stack] .pl-fs__r{grid-column:1;grid-row:auto;margin-top:14px;padding-top:12px;border-top:1px solid var(--line-1);grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pl-fs:not(:last-child)::after,.pl-flow[data-layout=stack] .pl-fs:not(:last-child)::after{left:31px;top:44px}
+}
+
+/* ---- the flagship: a flat, precise surface; no glow, no wash, no pulsing hint --------------------------------- */
+.afx{background:var(--a24-surface);box-shadow:none;border-color:var(--line-2)}
+.afx-hint{gap:0;padding:0;border:0;background:none;color:var(--text-3);font:400 13px/1.5 var(--font)}
+.afx-hint i{display:none}
+.afx-stage{background-color:#101013;background-image:none;box-shadow:none}
+.afx-outs{box-shadow:none}
+.afx-o,.afx-o:first-child,.afx-o--main{background:var(--bg-0)}
+.afx-o b.is-pulse{animation:none}
+.afx-replay{border:1px solid var(--line-3);background:none;color:var(--text-2)}
+.afx-replay:hover{border-color:#5d3fe0;color:#a796f8}
+.afx input[type=range]::-webkit-slider-thumb{box-shadow:none}
+.afx input[type=range]::-moz-range-thumb{box-shadow:none}
+.afx input[type=range]:hover::-webkit-slider-thumb,.afx input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px rgba(93,63,224,.35)}
+.afx-st.is-on i{box-shadow:none}
+.bil-bar--a i{background:#5d3fe0}
+.ibf-text mark{box-shadow:none;background:rgba(93,63,224,.2)}
+.pmf-card.is-drag{box-shadow:0 8px 20px rgba(0,0,0,.4)}
+.cff-dot{box-shadow:none}
+.opf-n.is-hot{box-shadow:none}
+.cmf-hc.is-on{box-shadow:0 0 0 1px #ddd7fd}
+.afx.is-live .cmf-cl,.afx.is-live .opf-n{animation:none}
+
+/* ---- calculators (pricing, roi) ------------------------------------------------------------------------------ */
+.a17-calc__out{background:none}
+.a17-calc__meter i{background:linear-gradient(90deg,#5d3fe0 var(--p,0%),#1d1e22 var(--p,0%))}
+
+/* ---- cycle 21 page parts: flatten the washes and lifts ------------------------------------------------------- */
+.h21-map__col--mid{background:none}
+.h21-rhythm li i{background:#5d3fe0}
+.h21-search:focus-within{box-shadow:none}
+.h21-tool,.h21-quad li,.h21-costs li,.h21-files li,.h21-art,.h21-case-side,.h21-road>div,.h21-strip,.h21-seg__a{box-shadow:none;background-image:none}
+.h21-gains li svg{display:none}
+
+/* ---- the site chrome: a solid nav, no glass ------------------------------------------------------------------- */
+.nav,.nav.is-scrolled,.nav[data-scrolled]{-webkit-backdrop-filter:none;backdrop-filter:none}
+.mega,.drawer{-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 12px 32px rgba(0,0,0,.45)}
+
+/* ---- the one example workspace (xw/hero_app.py, #workspace): kept from cycle 23, without the glow --------------- */
+#workspace{scroll-margin-top:calc(var(--nav-h) + 16px)}
+.hx{border-color:var(--line-3);box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 30px 80px -40px rgba(0,0,0,.9)}
+.hx-full{margin-left:10px;margin-right:12px}
+.hx-open{font:inherit;cursor:pointer}
+.hx-cap__t b{font-weight:500;color:var(--text-1);margin-right:2px}
+.hx.is-full .hx-live{flex:1;min-height:0;display:flex;flex-direction:column}
+.hx.is-full .hx-screen{flex:1;height:auto;min-height:0}
+.hx.is-full .hx-open{display:none}
+.hx.is-full .hx-cap{display:none}
+@media (max-width:600px){.hx-full{margin-left:auto;margin-right:8px;padding:0 9px}}
+
+/* ---- motion: no section fades in or slides; nothing moves unless the visitor acts ------------------------------ */
+[data-reveal],[data-reveal][data-pending]{opacity:1;transform:none;transition:none}
+@media (prefers-reduced-motion:reduce){.pl-fs,.afx *{transition:none}}
+@media (forced-colors:active){.pl-fs,.a17-plan,.afx{border-color:CanvasText}}
+.a17-calc__h{display:block;color:var(--text-2);font:500 14px/20px var(--font)}
+
+/* ============================================================================================================
+   24A1 (cycle 24, brief 25): the rest of the kill list, found by the layout guard's "look" rule (tools/test_layout_guard.py)
+   ============================================================================================================ */
+:root{--code:var(--font)}
+/* the chrome: no scroll-progress line, no gradient footer rule, flat buttons, keys set in the one typeface */
+.nav::before{content:none;display:none;animation:none}
+.footer{background:none}
+.footer::before,.footer::after{content:none;display:none}
+.btn--primary,.btn--primary:hover,.btn--secondary,.btn--secondary:hover{box-shadow:none!important}
+.nav__search kbd,.pal kbd,.xcm__in kbd,kbd{font-family:var(--font)!important;font-weight:500;letter-spacing:0}
+/* hero stages: the picture sits on the page; no glow behind or beneath it */
+.a17-stage::before,.a17-stage::after{content:none;display:none}
+.a17-stage{background:none;filter:none}
+/* the example workspace's frame: one flat surface and one hairline, depth only from the line */
+.hx,.portal-frame.hx{background:var(--a24-surface);box-shadow:none}
+.hx-bar,.portal-frame__bar.hx-bar{background:var(--bg-1,#111214);box-shadow:none}
+/* legacy page heroes (contact, get started, the legal pages): no eyebrow rule, no wash, no glass panel */
+.eyebrow::before,.eyebrow::after{content:none;display:none}
+.eyebrow{background:none}
+.display,.lead{filter:none}
+.panel.glass,.glass,.glass--elevated,.glass--edge,.glass--intel{background:var(--a24-surface)!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.glass::before,.glass::after,.glass--edge::before,.glass--edge::after{content:none!important;display:none!important}
+main>.section+.section::before{content:none;display:none}
+/* a centred hero centres its note under the buttons too */
+.a17-hero__copy--center .a17-cta__note{text-align:center;margin-left:auto;margin-right:auto}
+.page-hero .crumbs{margin-bottom:32px}
+
+/* ---- 24A1 figures (xw/figures24.py): the system chain and the dated timeline ---------------------------------- */
+.a24-chain{margin:0}
+.a24-chain__l{display:flex;align-items:stretch;margin:0;padding:0;list-style:none}
+.a24-node{flex:1 1 0;min-width:0;padding:20px 20px 22px;border:1px solid var(--line-2);border-radius:var(--a24-r);background:var(--a24-surface)}
+.a24-node--you{border-color:#5d3fe0}
+.a24-node__r{display:block;font:400 12.5px/1.4 var(--font);color:var(--text-3)}
+.a24-node--you .a24-node__r{color:#a796f8}
+.a24-node__n{display:block;margin-top:6px;font:600 15.5px/1.35 var(--font);letter-spacing:-.005em;color:var(--text-1)}
+.a24-node__f{display:grid;gap:8px;margin:16px 0 0;padding:14px 0 0;border-top:1px solid var(--line-1);list-style:none}
+.a24-node__f li{font:400 13.5px/1.45 var(--font);color:var(--text-2)}
+.a24-link{position:relative;flex:0 0 128px;display:flex;flex-direction:column;justify-content:flex-start;padding:22px 10px 0}
+.a24-link__w{display:block;min-height:34px;font:400 12px/1.4 var(--font);color:var(--text-3);text-align:center}
+.a24-link i{position:relative;display:block;height:1px;margin-top:6px;background:var(--line-4)}
+.a24-link i::after{content:"";position:absolute;right:0;top:-3px;width:6px;height:6px;border-top:1px solid var(--line-4);border-right:1px solid var(--line-4);transform:rotate(45deg)}
+.a24-cap{margin-top:16px;max-width:760px;font:400 13px/1.55 var(--font);color:var(--text-3)}
+@media (max-width:960px){
+  .a24-chain__l{flex-direction:column}
+  .a24-node{flex:none}
+  .a24-link{flex:none;flex-direction:row;align-items:center;gap:14px;min-height:56px;padding:0 0 0 28px}
+  .a24-link i{order:-1;width:1px;height:56px;margin:0;flex:none}
+  .a24-link i::after{right:auto;left:-3px;top:auto;bottom:0;transform:rotate(135deg)}
+  .a24-link__w{min-height:0;text-align:left}
+}
+.a24-tl{margin:0}
+.a24-tl ol{margin:0;padding:0;list-style:none;border-top:1px solid var(--line-3)}
+.a24-tl__i{display:grid;grid-template-columns:minmax(120px,160px) minmax(0,1fr);column-gap:24px;padding:18px 0;border-bottom:1px solid var(--line-1)}
+.a24-tl__i time{font:400 13.5px/1.5 var(--font);color:var(--text-3)}
+.a24-tl__i b{display:block;font:500 15px/1.45 var(--font);color:var(--text-1)}
+.a24-tl__i b a{color:inherit;text-decoration:none}
+.a24-tl__i b a:hover{text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--line-4)}
+.a24-tl__i p{margin:4px 0 0;max-width:640px;font:400 14px/1.55 var(--font);color:var(--text-2)}
+@media (max-width:600px){.a24-tl__i{grid-template-columns:minmax(0,1fr);row-gap:4px}}
+/* the legal index: each page's title and what it answers, on hairlines (no numbers: the pages are not a sequence) */
+.a24-docs{margin:0;padding:0;list-style:none;border-top:1px solid var(--line-3)}
+.a24-docs a{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);column-gap:24px;padding:16px 0;border-bottom:1px solid var(--line-1);color:var(--text-2);text-decoration:none}
+.a24-docs a:hover b{text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--line-4)}
+.a24-docs b{font:500 15px/1.45 var(--font);color:var(--text-1)}
+.a24-docs span{font:400 14px/1.5 var(--font)}
+@media (max-width:600px){.a24-docs a{grid-template-columns:minmax(0,1fr);row-gap:4px}}
+/* the integrations directory: one hairline row per tool (who, what for, exact access) */
+.a24-tools{margin:12px 0 0;padding:0;list-style:none;border-top:1px solid var(--line-3)}
+.a24-tool{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,5fr) minmax(0,4fr);column-gap:32px;padding:20px 0;border-bottom:1px solid var(--line-1)}
+.a24-tool[hidden]{display:none}
+.a24-tool__n b{display:block;font:500 15px/1.4 var(--font);color:var(--text-1)}
+.a24-tool__n span{display:block;margin-top:2px;font:400 13px/1.5 var(--font);color:var(--text-3)}
+.a24-tool__d p{margin:0;font:400 14px/1.55 var(--font);color:var(--text-1)}
+.a24-tool__u{display:grid;gap:4px;margin:8px 0 0;padding:0;list-style:none;font:400 13.5px/1.5 var(--font);color:var(--text-2)}
+.a24-tool__u b{font-weight:500;color:var(--text-1)}
+.a24-tool__s .h21-scopes{display:grid;gap:6px;margin:0}
+.a24-tool__s .h21-scopes>div{display:grid;grid-template-columns:64px minmax(0,1fr);column-gap:12px}
+.a24-tool__s dt{font:400 12.5px/1.5 var(--font);color:var(--text-3)}
+.a24-tool__s dd{margin:0;font:400 12.5px/1.5 var(--font);color:var(--text-2);overflow-wrap:anywhere}
+.a24-tool__s code{display:inline;padding:0;border:0;background:none;font:inherit;color:var(--text-2)}
+.a24-tool__s .h21-scopes{border:0;padding:0}
+.h21-search input{border:0!important;background:none!important;box-shadow:none!important;outline-offset:2px}
+@media (max-width:960px){.a24-tool{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr)}.a24-tool__s{grid-column:2;margin-top:12px}}
+@media (max-width:600px){.a24-tool{grid-template-columns:minmax(0,1fr);row-gap:10px}.a24-tool__s{grid-column:1;margin-top:0}}
+.a24-sec--figs{border-top:0;padding-top:0}
+/* the filter bar: a plain search field and quiet chips */
+.h21-search{border-radius:8px;background:none;box-shadow:none}
+.h21-chip{border-radius:6px;background:none}
+.h21-chip[aria-pressed=true]{border-color:#5d3fe0;color:#a796f8;background:none}
+/* the roadmap: two columns of text on a hairline, not boxes */
+.h21-road>div,.h21-road__wait,.h21-road__later{border:0!important;border-radius:0!important;background:none!important;padding-left:0!important;padding-right:0!important}
+.h21-road{border-top:1px solid var(--line-3);padding-top:8px}
+/* ---- 24A1: the cycle 21 card grids become editorial lists (help, changelog, use cases, compare, about, roi) ---- */
+/* guides: one hairline row each, title, what it does, where it is */
+.h21-group{margin-top:36px}
+.h21-group h3{margin:0 0 4px;font:600 16px/1.4 var(--font);color:var(--text-1)}
+.h21-arts,.h21-arts--row{display:block;margin:0;padding:0;list-style:none;border-top:1px solid var(--line-3)}
+.h21-arts>li[hidden]{display:none}
+.h21-art,.h21-art--s{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,5fr) minmax(0,3fr);column-gap:24px;align-items:baseline;height:auto;padding:14px 0;
+  border:0;border-bottom:1px solid var(--line-1);border-radius:0;background:none;box-shadow:none;text-decoration:none}
+.h21-art:hover{border-color:var(--line-1);background:none}
+.h21-art:hover b{text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--line-4)}
+.h21-art b{font:500 15px/1.45 var(--font)}
+.h21-art span{font:400 14px/1.5 var(--font)}
+.h21-art small{display:block;margin:0;padding:0;font:400 13px/1.5 var(--font);color:var(--text-3)}
+.h21-art--s{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+@media (max-width:760px){.h21-art,.h21-art--s{grid-template-columns:minmax(0,1fr);row-gap:4px}}
+kbd{display:inline-block;padding:1px 6px;border:1px solid var(--line-3);border-radius:4px;background:none;color:var(--text-1);font:500 12.5px/1.5 var(--font)}
+/* release notes: a dated rail, each note on a hairline, chips kept as plain labels */
+.h21-days{gap:0;border-top:1px solid var(--line-3)}
+.h21-day{padding:24px 0;border-bottom:1px solid var(--line-1)}
+.h21-day__d b{font:500 26px/1.1 var(--font);letter-spacing:-.02em}
+.h21-day__items{gap:0}
+.h21-rel{padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+.h21-rel+.h21-rel{margin-top:24px;padding-top:24px;border-top:1px solid var(--line-1)}
+.h21-rel h3{margin-top:10px;font:600 17px/1.35 var(--font)}
+.h21-rel ul{border-top:0;padding-top:0}
+.h21-rel li::before{width:4px;height:1px;top:.75em;border-radius:0;background:var(--text-3)}
+@media (max-width:760px){.h21-day{grid-template-columns:minmax(0,1fr);gap:12px}.h21-day__d{position:static;flex-direction:row;align-items:baseline;gap:8px}}
+/* the use-case and compare parts: text on hairlines */
+.h21-seg{gap:0;border-top:1px solid var(--line-3)}
+.h21-seg__a{padding:16px 24px 16px 0;border:0;border-radius:0;background:none}
+.h21-seg__a:hover{background:none;border:0}
+.h21-seg__a:hover b{text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--line-4)}
+.h21-seg__a b{font:600 18px/1.3 var(--font)}
+.h21-case-side{padding:0;border:0;border-radius:0;background:none;border-top:1px solid var(--line-3);padding-top:14px}
+.h21-gains{gap:0 24px;border-top:1px solid var(--line-1);margin-top:28px}
+.h21-gains li{padding:14px 0 0;border:0;border-radius:0;color:var(--text-1);font:500 14px/1.5 var(--font)}
+.h21-quad{gap:0 32px;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line-3)}
+.h21-quad li{padding:16px 0;border:0;border-bottom:1px solid var(--line-1);border-radius:0;background:none}
+.h21-costs{gap:0 32px;border-top:1px solid var(--line-3)}
+.h21-costs li,.h21-costs li:last-child{padding:18px 0 0;border:0;border-radius:0;background:none}
+.h21-costs li:last-child b{color:#a796f8}
+.h21-costs span{font:400 13px/1.4 var(--font);color:var(--text-3)}
+.h21-method{gap:0 32px;border-top:1px solid var(--line-3)}
+.h21-method>div,.h21-method li{padding:16px 0;border:0;border-bottom:1px solid var(--line-1);border-radius:0;background:none}
+/* how-it-works: the five checks as one ruled row; the morning log on hairlines */
+.h21-checks{border:0;border-radius:0;background:none;border-top:1px solid var(--line-3)}
+.h21-checks li{padding:18px 18px 18px 0}
+.h21-checks li+li{border-left:0;padding-left:18px;border-left:1px solid var(--line-1)}
+.h21-checks .num{border-color:var(--line-4);color:var(--text-1);font-weight:500}
+.h21-tl{border:0;border-radius:0;background:none;border-top:1px solid var(--line-3)}
+.h21-tl li{padding:14px 0}
+@media (max-width:900px){.h21-checks{grid-template-columns:minmax(0,1fr)}.h21-checks li+li{border-left:0;padding-left:0;border-top:1px solid var(--line-1)}}
+@media (max-width:760px){.h21-quad,.h21-costs,.h21-method,.h21-seg,.h21-gains{grid-template-columns:minmax(0,1fr)}}
+/* the savings calculator: inputs left, the answer right and kept in view while the sliders move */
+.h21-roi{overflow:visible;border-color:var(--line-2);border-radius:var(--a24-r);background:var(--a24-surface)}
+.h21-roi__out{position:sticky;top:calc(var(--nav-h,64px) + 16px);align-self:start;background:none!important;box-shadow:none}
+.h21-roi__out::before,.h21-roi__out::after{content:none;display:none}
+.h21-roi__viz{border:0;border-top:1px solid var(--line-1);border-radius:0;background:none;padding-left:0;padding-right:0}
+@media (max-width:960px){.h21-roi__out{position:static}}
+/* price extras (home, pricing): three columns on one hairline: what it is, its price, one line on how it works */
+.a17-extras{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:32px;row-gap:0}
+.a17-extra{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:4px;padding:18px 0 0}
+.a17-extra span{order:-1;font:500 14px/1.4 var(--font);color:var(--text-1)}
+.a17-extra b{display:flex;align-items:baseline;gap:6px;font:500 20px/1.25 var(--font);letter-spacing:-.01em}
+.a17-extra b small{font:400 13px/1.4 var(--font);color:var(--text-3)}
+.a17-extra p{margin:4px 0 0;font:400 13.5px/1.5 var(--font);color:var(--text-2)}
+@media (max-width:760px){.a17-extras{grid-template-columns:minmax(0,1fr)}}
+/* the success fee's worked example and its exclusions: two ruled columns, no boxes */
+.a17-fee__ex,.a17-fee__no{padding:0;border:0;border-radius:0;background:none;border-top:1px solid var(--line-3);padding-top:16px}
+.a17-fee__no ul{padding-left:0;list-style:none}
+.a17-fee__no li{padding:6px 0;border-bottom:1px solid var(--line-1);color:var(--text-2)}
+.a17-fee__ex .is-total{color:#a796f8}
+/* the morning log: names in type, a neutral dot */
+.h21-tl__who{display:block;font:500 14px/1.4 var(--font);color:var(--text-1)}
+.h21-tl__dot{background:var(--line-4)!important;border-color:var(--line-4)!important;box-shadow:none!important}
+/* the example workspace contains the app's own overlays: the side panel (.rp), its scrim, menus and dialogs open inside
+   the frame, not over the website (contain makes the frame the containing block for their fixed position) */
+.hx-screen>.hx-cam{contain:layout paint}
+/* the menus: titles and one line each, a flat panel */
+.mega__item{grid-template-columns:minmax(0,1fr)!important;gap:0}
+.mega__h{text-transform:none;letter-spacing:0;font:500 12.5px/1.4 var(--font);color:var(--text-3)}
+/* 24A1, round 2 (the guard's look rule): the last soft shadows and washes */
+#workspace.portal-frame,#workspace.hx{background:var(--a24-surface)!important;box-shadow:none!important}
+.h21-app__win{box-shadow:none!important}
+.sticky-cta{box-shadow:none!important}
+/* the cost bar's add-on part: a flat mid purple (a pattern read as decoration); plan, add-ons and packs stay three tones */
+.a17-stack i[data-seg=addons],.a17-stack__key .k-addons{background:#8b74f5!important}
+/* use cases: the agents-and-cost sheet beside each case is one column of rows; the gains sit clear of the step flow */
+.h21-case-side .pl-spec{display:block;border-top:0}
+.h21-case-side .pl-spec__r{display:grid;grid-template-columns:72px minmax(0,1fr);column-gap:16px;padding:10px 0!important;border-left:0!important}
+.h21-case-side .pl-spec__r:last-child{border-bottom:0}
+.h21-gains{margin-bottom:28px}
+/* the workspace bar keeps its tabs, the example label and Full screen; the decorative address pill goes */
+.hx-url{display:none!important}
+@media (max-width:600px){.a24-split .pl-checks{grid-template-columns:minmax(0,1fr)}}
+/* no pointer spotlight on menus and lists: the hover answers with the text, not a glow */
+.rel__item::after,.mega__item::after,.index-list a::after,.cx__item::after,.capi__row::after,.lib__row::after{content:none!important;display:none!important}
+/* the phone's still view of the workspace ends on a hairline, not a fade */
+.hx-live::after{content:none!important;display:none!important}
+/* inside the example workspace at mid widths, a plan figure's unit wraps under its number instead of running out of
+   its cell (sent to 24B1 for the app itself, logs\24-requests-24B1.md) */
+#workspace .xp .bl-fig>b{white-space:normal;overflow:visible}
+/* inside the example workspace at mid widths, the header band's status label keeps its width (sent to 24B1) */
+#workspace .xp .hb-row>.lx-label,#workspace .xp .hb-row .lx-label{flex:none!important;max-width:none!important;width:auto!important;min-width:max-content!important;overflow:visible!important}
+/* the example workspace on a phone: the app header's right-hand buttons scroll sideways inside the header instead of
+   running out of it (sent to 24B1) */
+@media (max-width:600px){#workspace .xp #xpHead .lx-head-r{min-width:0;flex-shrink:1;overflow-x:auto;scrollbar-width:none}}

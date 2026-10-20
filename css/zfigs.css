@@ -1,0 +1,63 @@
+/* ---------------------------------------------------------------- Xevrion figures (xw/figures.py)
+   Flat line drawings of the product's work. Purple: Xevrion acting. Amber: a person is needed. Red and green only as
+   small pass/fail marks. Complete at rest; motion only shows work happening and stops for reduced motion. */
+.fx{display:block;width:100%;max-width:340px;height:auto;overflow:visible}
+.figs .fx{margin:clamp(16px,2vw,28px) auto clamp(20px,3vw,36px)}
+li > .fx{margin-block:0 var(--s-5)}
+.fx text{font-family:var(--mono);font-size:8.6px;letter-spacing:.01em;fill:var(--text-3)}
+.fx .fx-tb{font-family:var(--font);font-size:10.4px;font-weight:510;letter-spacing:-.005em;fill:var(--text-2)}
+.fx .fx-tx{fill:var(--violet-200)}
+.fx .fx-tp{fill:var(--warn)}
+.fx .fx-tn{font-size:9px;font-weight:600;fill:var(--text-1)}
+.fx .fx-tgo{font-family:var(--font);font-size:10.6px;font-weight:600;fill:var(--text-inverse)}
+.fx-frame{fill:var(--bg-1);stroke:var(--line-3);stroke-width:1}
+.fx-framex{fill:var(--bg-1);stroke:var(--violet-line);stroke-width:1}
+.fx-bar{fill:rgba(255,255,255,.035);stroke:var(--line-2)}
+.fx-soft{fill:rgba(255,255,255,.07)}
+.fx-strong{fill:rgba(255,255,255,.2)}
+.fx-chip{fill:var(--bg-2);stroke:var(--line-3)}
+.fx-glyph{fill:none;stroke:var(--text-3);stroke-width:1.1}
+.fx-line{fill:none;stroke:rgba(255,255,255,.22);stroke-width:1.1;stroke-linejoin:round}
+.fx-guide{stroke:rgba(115,87,255,.09);stroke-width:1}
+.fx-rule,.fx-grid{stroke:var(--line-2);stroke-width:1}
+.fx-grid{stroke-dasharray:2 4}
+.fx-axis{stroke:var(--line-4);stroke-width:1}
+.fx-route{fill:none;stroke:var(--line-4);stroke-width:1.1}
+.fx-flow{fill:none;stroke:var(--violet-400);stroke-width:1.4;stroke-dasharray:3 13;stroke-linecap:round}
+.fx-hub{fill:var(--violet-wash);stroke:var(--violet-400);stroke-width:1.2}
+.fx-found{fill:none;stroke:var(--violet-400);stroke-width:1;stroke-dasharray:3 2.5}
+.fx-scan line{stroke:var(--violet-400);stroke-width:1.2}
+.fx-scan path{fill:var(--violet-400)}
+.fx-slot{fill:none;stroke:var(--line-4);stroke-dasharray:3 3}
+.fx-xbox{fill:var(--violet-wash);stroke:var(--violet-400);stroke-width:1.1}
+.fx-xfill{fill:var(--violet-500)}
+.fx-xdot{fill:var(--violet-400)}
+.fx-ok{fill:var(--ok)}
+.fx-bad{fill:var(--risk)}
+.fx-person{fill:var(--warn)}
+.fx-idle{fill:none;stroke:var(--text-3);stroke-width:1}
+.fx-track{fill:none;stroke:var(--line-3);stroke-width:2.4}
+.fx-arc-ok,.fx-arc-bad{fill:none;stroke-width:2.4;stroke-linecap:round}
+.fx-arc-ok{stroke:var(--ok)}
+.fx-arc-bad{stroke:var(--risk)}
+.fx-arrow{fill:none;stroke:var(--text-3);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.fx-go{fill:var(--text-1)}
+.fx-track-b{fill:var(--line-3)}
+.fx-fill{fill:var(--violet-400);transform-box:fill-box;transform-origin:0 50%;transform:scaleX(.68)}
+.fx-area{fill:rgba(115,87,255,.07)}
+.fx-result{fill:none;stroke:var(--violet-400);stroke-width:1.6;stroke-linejoin:round}
+.fx-proof{fill:var(--bg-1);stroke:var(--text-2);stroke-width:1}
+.fx-draw{stroke-dasharray:1;stroke-dashoffset:0}
+@media (prefers-reduced-motion:no-preference){
+  .fx-scan{animation:fx-scan 4.2s var(--ease-inout) infinite alternate}
+  .fx-flow{animation:fx-flow 1.6s linear infinite;animation-delay:var(--fd,0s)}
+  .fx-place{animation:fx-place 4.8s var(--ease) infinite}
+  .fx-fill{animation:fx-fill 3.6s var(--ease-inout) infinite}
+  .fx-draw{transition:stroke-dashoffset 1.8s var(--ease)}
+  .figs[data-armed] li:not(.is-in) .fx-draw,[data-pending] .fx-draw{stroke-dashoffset:1}
+  .figs li:hover .fx-hub,.figs li:hover .fx-xbox{fill:rgba(115,87,255,.18)}
+}
+@keyframes fx-scan{from{transform:translateY(-44px)}to{transform:translateY(62px)}}
+@keyframes fx-flow{to{stroke-dashoffset:-16}}
+@keyframes fx-place{0%,12%{transform:translateX(-26px);opacity:0}34%,100%{transform:none;opacity:1}}
+@keyframes fx-fill{0%{transform:scaleX(.08)}70%,100%{transform:scaleX(1)}}

@@ -1,0 +1,63 @@
+/* Cycle 15 (16D, the website). Loaded just before zz-crisp.css (which stays last); it uses the cycle 14 tokens.
+
+   1. More tools (/platform#more-tools): the app's own More tools page, mirrored by xw/more_tools.py. One row per app
+      group: the group's name, count and purpose on the left, its tools as compact cards on the right. Grey hairlines,
+      purple only for the hover edge and focus (Henry's colour rule: no green or red outside labels). */
+.mt{display:grid;border-top:1px solid var(--line-2)}
+.mt-g{display:grid;grid-template-columns:minmax(0,248px) minmax(0,1fr);gap:28px;padding:24px 0;border-bottom:1px solid var(--line-2)}
+.mt-g__h{display:grid;grid-template-columns:minmax(0,1fr) auto;align-content:start;gap:6px 12px}
+.mt-g__h h3{margin:0;font-size:15px;line-height:22px;font-weight:var(--w-medium,510);letter-spacing:-.01em;color:var(--text-1)}
+.mt-g__n{font:500 12px/22px var(--mono,monospace);color:var(--text-3)}
+.mt-g__h p{grid-column:1/-1;margin:0;font-size:13px;line-height:20px;color:var(--text-3);max-width:30ch}
+.mt-g__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:10px}
+.mt-card{display:flex;flex-direction:column;min-width:0;border:1px solid var(--line-2);border-radius:10px;background:var(--bg-1,#0f1013);
+  transition:border-color var(--hl-out,.2s) ease}
+.mt-card:hover,.mt-card:focus-within{border-color:var(--xp-purple,#5d3fe0);transition-duration:var(--hl-in,.08s)}
+.mt-card__main{display:grid;grid-template-columns:28px minmax(0,1fr);gap:4px 10px;align-content:start;flex:1;padding:14px 14px 10px;color:inherit;text-decoration:none;border-radius:10px 10px 0 0}
+.mt-card__main:focus-visible{outline:2px solid var(--xp-purple-ink,#a796f8);outline-offset:-2px}
+.mt-card__ic{grid-row:1;width:28px;height:28px;display:grid;place-items:center;border:1px solid var(--line-3);border-radius:7px;color:var(--xp-purple-ink,#a796f8)}
+.mt-card__t{grid-row:1;align-self:center;margin:0;font-size:14px;line-height:20px;font-weight:var(--w-medium,510);color:var(--text-1)}
+.mt-card__one{grid-column:1/-1;margin:6px 0 0;font-size:13px;line-height:19px;color:var(--text-2)}
+.mt-card__first{grid-column:1/-1;margin:8px 0 0;padding-top:8px;border-top:1px solid var(--line-1,rgba(255,255,255,.06));font-size:12.5px;line-height:18px;color:var(--text-3)}
+.mt-card__first b{display:block;font:500 11px/16px var(--mono,monospace);letter-spacing:.02em;color:var(--text-4,#7c818c)}
+.mt-card__foot{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0;padding:10px 14px 12px;border-top:1px solid var(--line-1,rgba(255,255,255,.06));font-size:12.5px;line-height:18px}
+.mt-card__foot .link{color:var(--xp-purple-ink,#a796f8)}
+@media (min-width:1180px){.mt-g__grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:900px){.mt-g{grid-template-columns:minmax(0,1fr);gap:14px}.mt-g__h p{max-width:none}}
+@media (max-width:560px){.mt-g__grid{grid-template-columns:minmax(0,1fr)}}
+
+/* 2. The /customer-portal tour rail: every More tools page the app has (xw/pages/ops_portal.py), so the rail is one
+      compact row per group (Services, More tools, Also) with the group's name and count in a fixed column. */
+.tr-rail{display:grid!important;gap:6px;flex-wrap:nowrap}
+.tr-row{display:grid;grid-template-columns:104px minmax(0,1fr);align-items:start;gap:10px}
+.tr-grp{display:flex;align-items:center;gap:6px;height:32px;margin:0!important;font:500 12px/1 var(--mono,monospace);color:var(--text-3)}
+.tr-grp i{font-style:normal;color:var(--text-4,#80848e)}
+.tr-tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tr-tab{min-height:32px!important;padding:0 11px!important;gap:6px!important;font-size:13px}
+.tr-tab svg{width:14px!important;height:14px!important}
+@media (max-width:760px){
+  .tr-row{grid-template-columns:minmax(0,1fr);gap:4px}
+  .tr-grp{height:auto}
+  .tr-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+  .tr-tab{flex:none}
+}
+
+/* 3. Learning and memory (/product/learning-and-memory): a chart's own title and its example label share one row and
+      never overlap, inside any panel (they were only laid out inside chapter visuals). */
+.panel>.viz-head{display:flex;justify-content:space-between;align-items:center;gap:8px 12px;flex-wrap:wrap;margin-bottom:var(--s-5,20px)}
+.panel>.viz-head .label{margin:0}
+
+/* 4. The homepage window (xw/hero_app.py, src/js/viz-hero.js): quick beats, each framing one component of the real app.
+      The camera (.hx-cam) holds the app and is moved and scaled; the frame (.hx-spot) outlines the chosen component in
+      Xevrion purple and dims the rest. Nothing here draws the app. */
+.hx-screen{position:relative;overflow:hidden;isolation:isolate}
+.hx-cam{position:absolute;inset:0;transform-origin:0 0;transition:transform .48s cubic-bezier(.22,.7,.18,1)}
+.hx-spot{position:absolute;z-index:2;left:0;top:0;width:0;height:0;pointer-events:none;opacity:0;border:1px solid var(--xp-purple,#5d3fe0);border-radius:10px;
+  box-shadow:0 0 0 200vmax rgba(9,10,12,.62);transition:left .48s cubic-bezier(.22,.7,.18,1),top .48s cubic-bezier(.22,.7,.18,1),width .48s cubic-bezier(.22,.7,.18,1),height .48s cubic-bezier(.22,.7,.18,1),opacity .25s ease}
+.hx-spot.is-on{opacity:1}
+@media (min-resolution:2dppx){.hx-spot{border-width:.5px;box-shadow:0 0 0 .5px var(--xp-purple,#5d3fe0),0 0 0 200vmax rgba(9,10,12,.62)}}
+.hx-stop i{background:var(--xp-purple,#5d3fe0)!important;transition:transform .12s linear}
+.hx-stop[aria-current=true] b{border-color:var(--xp-purple,#5d3fe0)!important;color:var(--xp-purple-ink,#a796f8)!important}
+.hx-load__dot{background:var(--xp-purple,#5d3fe0)!important}
+.hx-cap__t{transition:opacity .2s ease}
+@media (prefers-reduced-motion:reduce){.hx-cam,.hx-spot{transition:none}}

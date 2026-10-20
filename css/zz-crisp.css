@@ -1,0 +1,72 @@
+/* ============================================================================================================
+   zz-crisp.css (12E, 13E, 14C): the palette, the one purple and the one label, for the website's own CSS. Loaded last
+   (build.py sorts the sheets by name after xevrion.css), so it decides tokens, labels and pixel-grid details everywhere.
+   Values are the portal's, cycle 14 (platform-gateway portal-ui portal.css, the final .xp.xp.xp.xp blocks), copied exactly:
+   - the purple ramp: core #5d3fe0 (every purple button edge, focus ring, selected state, the Ask and Console purple),
+     hover #6b4ff0, ink #a796f8 (purple text and icons on dark), mid #8b74f5, light #b9adfa, pale #ddd7fd, and the
+     translucent fill rgba(93,63,224,.18) (.30 on hover);
+   - the colour rule (Henry, 11 Oct 2026): green, red and the warning tone appear ONLY on labels. Everything else that
+     needs colour (deltas, charts, diagrams, progress, links, accents, selection) is Xevrion purple; xw/palette.py puts
+     every literal colour of the site's CSS onto the ramp, and labels take their tones from the --tone-* tokens below;
+   - the warning tone is AMBER, crisp, dark but vivid (#c98a1b line, #e6b55a text) (Henry, final);
+   - labels are outlines 16px tall: transparent, a hairline border in the tone's line colour (0.5px on 2x screens),
+     text in its ink, 500 11px/14px, 5px either side, 8px corners;
+   - purple buttons have NO colour fill: transparent, a crisp 1px #5d3fe0 border and #a796f8 text (Henry, final);
+     hover brightens the edge to #6b4ff0 and the text to white.
+   ============================================================================================================ */
+:root{
+  --xp-purple:#5d3fe0;--xp-purple-hover:#6b4ff0;--xp-purple-ink:#a796f8;
+  --xp-purple-mid:#8b74f5;--xp-purple-light:#b9adfa;--xp-purple-pale:#ddd7fd;
+  --xp-purple-fill:rgba(93,63,224,.18);--xp-purple-fill-hover:rgba(93,63,224,.30);--xp-purple-fill-press:rgba(93,63,224,.38);
+  /* label tones only (the line is the label's border, the ink its text) */
+  --tone-neutral-line:#34373e;--tone-neutral-ink:#c9ced6;
+  --tone-purple-line:#5d3fe0;--tone-purple-ink:#a796f8;
+  --tone-blue-line:#5d3fe0;--tone-blue-ink:#a796f8;
+  --tone-green-line:color-mix(in srgb,#27a06c 55%,#101113);--tone-green-ink:#64c497;
+  --tone-amber-line:color-mix(in srgb,#c98a1b 60%,#101113);--tone-amber-ink:#e6b55a;
+  --tone-warn-line:color-mix(in srgb,#c98a1b 60%,#101113);--tone-warn-ink:#e6b55a;
+  --tone-red-line:color-mix(in srgb,#d63c55 62%,#101113);--tone-red-ink:#f58b9c;
+  /* the site's older names: everything outside a label is the purple ramp */
+  --violet-500:var(--xp-purple);--violet-400:var(--xp-purple);--violet-200:var(--xp-purple-ink);--violet-700:var(--xp-purple);
+  --violet-line:var(--xp-purple);--violet-glow:color-mix(in srgb,var(--xp-purple) 35%,transparent);
+  --violet-wash:color-mix(in srgb,var(--xp-purple) 12%,#0b0c0e);--accent:var(--xp-purple);
+  --ok:var(--xp-purple);--risk:var(--xp-purple-pale);--warn:var(--xp-purple-light);--amber:var(--xp-purple-light);
+  --ok-wash:color-mix(in srgb,var(--xp-purple) 12%,#0b0c0e);--risk-wash:color-mix(in srgb,var(--xp-purple) 12%,#0b0c0e);
+  --amber-wash:color-mix(in srgb,var(--xp-purple) 12%,#0b0c0e);
+}
+
+/* the label: .xl in new code; the website's older label classes are the same component */
+.xl,.xt,.xchip,.app__chip,.oz-chip,.oz-tag,.oz-tag2,.sty__tag,.tmp-tag,.billing button>span{
+  --l-bd:var(--tone-neutral-line);--l-fg:var(--tone-neutral-ink);--l-dot:var(--tone-neutral-line);
+  box-sizing:border-box!important;display:inline-flex!important;align-items:center!important;gap:3px!important;height:16px!important;min-height:0!important;
+  margin-top:0;margin-bottom:0;padding:0 5px!important;border:1px solid var(--l-bd)!important;border-radius:8px!important;background:transparent!important;
+  color:var(--l-fg)!important;font:500 11px/14px var(--font)!important;letter-spacing:0!important;font-variant-numeric:tabular-nums;font-style:normal!important;
+  white-space:nowrap;vertical-align:middle;box-shadow:none!important;transform:none!important;filter:none!important;text-shadow:none!important;opacity:1}
+@media (min-resolution:2dppx){.xl,.xt,.xchip,.app__chip,.oz-chip,.oz-tag,.oz-tag2,.sty__tag,.tmp-tag,.billing button>span{border-width:.5px!important}}
+.xl>i,.xt::before{flex:none;width:4px!important;height:4px!important;border-radius:50%;background:var(--l-dot)!important}
+.xl svg,.xt svg,.xchip svg,.xchip .xg{flex:none;width:10px!important;height:10px!important;color:var(--l-dot)!important}
+
+/* tones: a hairline border in the line colour, text in the ink colour, never a fill */
+.xl[data-t=violet],.xl[data-t=purple],.xt--violet,.app__chip--v,.oz-chip--hit,.oz-tag2.v,.billing button>span{--l-bd:var(--tone-purple-line);--l-fg:var(--tone-purple-ink);--l-dot:var(--tone-purple-line)}
+.xl[data-t=blue],.xl[data-t=info]{--l-bd:var(--tone-blue-line);--l-fg:var(--tone-blue-ink);--l-dot:var(--tone-blue-line)}
+.xl[data-t=green],.xl[data-t=ok]{--l-bd:var(--tone-green-line);--l-fg:var(--tone-green-ink);--l-dot:var(--tone-green-line)}
+.xl[data-t=amber],.xl[data-t=warn],.xt--amber,.sty__tag--a{--l-bd:var(--tone-warn-line);--l-fg:var(--tone-warn-ink);--l-dot:var(--tone-warn-line)}
+.xl[data-t=red],.xl[data-t=risk],.xt--risk{--l-bd:var(--tone-red-line);--l-fg:var(--tone-red-ink);--l-dot:var(--tone-red-line)}
+.xt--ok{--l-dot:var(--tone-green-line)}
+.oz-chip[aria-pressed=true]{--l-bd:var(--tone-purple-line);--l-fg:var(--tone-purple-ink)}
+.billing button>span{margin-left:8px}
+
+/* purple buttons (14C, Henry final): no colour fill - transparent, a crisp 1px purple edge and purple text; hover
+   brightens the edge and the text, pressed keeps the core edge */
+.app__btn--p,.xb--primary,.xr3-guide__rail button.is-on{border:1px solid var(--xp-purple)!important;background:transparent!important;background-image:none!important;color:var(--xp-purple-ink)!important;filter:none!important;box-shadow:none!important}
+.app__btn--p:hover,.xb--primary:hover,.xr3-guide__rail button.is-on:hover{border-color:var(--xp-purple-hover)!important;background:transparent!important;color:#fff!important}
+.app__btn--p:active,.xb--primary:active,.xr3-guide__rail button.is-on:active{border-color:var(--xp-purple)!important;background:transparent!important}
+.tr-tab[aria-pressed=true]{border-color:var(--xp-purple)!important;background:transparent!important;color:var(--xp-purple-ink)!important}
+
+/* the logo (13E, Henry's item 2): the precise Slice mark, larger, upright and never transformed or filtered at rest */
+.brand{gap:12px}
+.brand .brand__mark{width:30px;height:30px;transform:none!important;filter:none;shape-rendering:geometricPrecision}
+.footer__brand .brand__mark,.drawer__head .brand__mark{width:28px;height:28px}
+@media (max-width:760px){.brand .brand__mark{width:28px;height:28px}}
+.xv-logo{flex:none;display:inline-block;vertical-align:-3px;color:var(--xp-purple-ink)}
+.oz-sug header .xv-logo,.cn-ai header .xv-logo{margin-right:8px}

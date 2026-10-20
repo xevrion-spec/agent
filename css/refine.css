@@ -1,0 +1,403 @@
+/* ==========================================================================================================================
+   refine.css · v4 (1 October 2026): the Linear-calibrated foundation for all three sites. Loaded last (build.py sorts it
+   after pages.css and product.css), so it re-decides the whole system without rewriting the layers beneath it.
+   Measured from linear.app and translated to Xevrion:
+     type    Inter Variable (self-hosted, every OpenType feature kept), cv01 + ss03, weights 510 and 590, optical sizes
+     colour  #08090a canvas, panel levels a step apart, four cool greys for text, hairlines at 5-11% white;
+             violet #7357FF only where Xevrion is acting, amber only where a person is needed, red only for failures
+     form    flat canvas (no grid, glow or noise), solid-set headlines, title-left / lead-right sections, framed stages
+             lit from above, quiet panels; hover arrives at once and leaves over .15s
+   Xevrion's twist: the blade of the Slice mark cuts one corner of every product window and stage, and the violet signal
+   is the only colour that moves.
+   ========================================================================================================================== */
+@font-face{font-family:"InterX";font-style:normal;font-weight:100 900;font-display:swap;src:url(/shared/fonts/inter-latin.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2190-2199,U+2212,U+2215,U+2713,U+FEFF,U+FFFD}
+@font-face{font-family:"InterX";font-style:normal;font-weight:100 900;font-display:swap;src:url(/shared/fonts/inter-latin-ext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"InterX Fallback";src:local("Arial");size-adjust:107.4%;ascent-override:90%;descent-override:22.4%;line-gap-override:0%}
+
+:root{
+  --font:"InterX","InterX Fallback",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --code:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --mono:var(--font);           /* labels everywhere used the mono face; they are set in the text face now */
+  --bg-0:#08090a; --bg-1:#0f1011; --bg-2:#141516; --bg-3:#191a1b; --bg-4:#1f2023;
+  --text-1:#f7f8f8; --text-2:#d0d6e0; --text-3:#8a8f98; --text-4:#80848e; --text-inverse:#08090a;
+  --line-1:rgba(255,255,255,.05); --line-2:rgba(255,255,255,.08); --line-3:rgba(255,255,255,.11); --line-4:rgba(255,255,255,.18);
+  --hair:#23252a; --hair-2:#34343a;
+  --violet-500:#7357ff; --violet-400:#8a72ff; --violet-200:#b9adff; --violet-wash:rgba(115,87,255,.12);
+  --amber:#f2c46b; --amber-wash:rgba(242,196,107,.12); --risk:#f0606c; --ok:#4cc38a;
+  --ease-out-quad:cubic-bezier(.25,.46,.45,.94); --ease-out-expo:cubic-bezier(.19,1,.22,1); --ease-out-quart:cubic-bezier(.165,.84,.44,1);
+  --ease:var(--ease-out-quart); --t-micro:160ms; --t-ui:240ms; --hl-in:0s; --hl-out:.15s;
+  --fs-display-xl:clamp(40px,5.1vw,72px); --fs-display:clamp(36px,4.45vw,64px); --fs-h2:clamp(30px,3.35vw,48px); --fs-h3:clamp(20px,1.65vw,24px);
+  --fs-h4:17px; --fs-lead:clamp(17px,1.5vw,22px); --fs-body:15.5px; --fs-small:14px; --fs-label:13px;
+  --w-regular:400; --w-medium:510; --w-semibold:590;
+  --max:1344px; --gutter:clamp(20px,3.6vw,48px); --nav-h:64px; --section:clamp(80px,9vw,128px);
+  --r-1:4px; --r-2:6px; --r-3:8px; --r-4:12px; --r-5:16px;
+  --blade:22px;
+  --shadow-1:none; --shadow-2:none; --shadow-3:0 24px 64px -24px rgba(0,0,0,.8);
+  --glass-nav:rgba(8,9,10,.72);
+}
+
+/* ---------------------------------------------------------------- canvas and text */
+html{background:var(--bg-0)}
+body{background:var(--bg-0);color:var(--text-1);font:var(--w-regular) var(--fs-body)/1.6 var(--font);letter-spacing:-.011em;
+  font-feature-settings:"cv01","ss03";font-optical-sizing:auto;-webkit-font-smoothing:antialiased}
+code,pre,kbd,samp,.mono-keep{font-family:var(--code);font-feature-settings:normal;letter-spacing:0}
+.env,.env::before,.env::after,.env__light,.env__scan{display:none!important}
+::selection{background:rgba(115,87,255,.45);color:#fff}
+:focus-visible{outline:2px solid var(--violet-200);outline-offset:2px;border-radius:4px}
+strong,b{font-weight:var(--w-semibold)}
+a{text-underline-offset:3px}
+
+/* headings: solid, medium weight, tight tracking; flat white (no chrome, no gradients) */
+h1,.h1,.display,.display-xl,h2,.h2,h3,.h3,h4,.h4{font-weight:var(--w-medium);color:var(--text-1);text-wrap:balance}
+.display-xl{font-size:var(--fs-display-xl);line-height:1;letter-spacing:-.022em}
+h1,.h1,.display{font-size:var(--fs-display);line-height:1.04;letter-spacing:-.022em}
+h2,.h2{font-size:var(--fs-h2);line-height:1.06;letter-spacing:-.022em}
+h3,.h3{font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.012em}
+h4,.h4{font-size:var(--fs-h4);line-height:1.4;letter-spacing:-.011em;font-weight:var(--w-semibold)}
+.page-hero h1,.hero h1,.section-head h2,.cta-final h2,.display-xl,.display{background:none!important;-webkit-text-fill-color:currentColor!important;color:var(--text-1)!important}
+.gradient-text{background:none!important;-webkit-text-fill-color:currentColor!important;color:inherit!important}
+.lead{font-size:var(--fs-lead);line-height:1.38;letter-spacing:-.012em;color:var(--text-2)}
+.muted{color:var(--text-2)}.quiet{color:var(--text-3)}
+.small{font-size:var(--fs-small)}
+.num,.metric__value{font-variant-numeric:tabular-nums}
+
+/* labels: sentence case, the text face, quiet; every label-like element on the sites is set the same way */
+.label,.eyebrow,.metric__label,.claim,.explain__title,.fig-code,.viz-hint,.flow-detail dt,.table thead th,.plan__name,.footer h2,.mega__h,.mega__fe,
+.pc-kpi span,.pc-q,.pc-ask-h,.fig,.core__phases li,.story__panel .k,.story__steps .when,.ledger .l-sys,.conf,.chip small,.ladder .who,
+.price-row .nm,.walk__stage dt,.app__th,.across__tag,.ff__state,.atlas__deg,.cx__n,.uc__sys,.pal__k,.portal-screen__go,.stf__out span,.stf__tag,
+.orient__name,.pm__rl,.dc__fix b,.tp-line b,.ad__row h3,.oz-tag,.oz-rem,.oz-paid-h,.oz-led__k,.pch__k,.ms__c2,.ms__row dt,.oz-sug header span,.cn-led span,
+.sw__q,.sw__kpi dt,.xh-ledger__k,.xh-demo,.figs .fig-n,.oz .fig,.stats__head .label{
+  font-family:var(--font)!important;text-transform:none!important;letter-spacing:-.005em!important}
+.label,.fig,.metric__label,.explain__title,.flow-detail dt,.story__panel .k,.walk__stage dt,.sw__q,.sw__kpi dt,.xh-ledger__k{font-size:13px!important;font-weight:var(--w-medium)!important;color:var(--text-3)!important}
+.updates time,.clog time{font-family:var(--code)!important;font-size:12px!important;letter-spacing:0!important}
+/* the eyebrow: one small line above a page title; section titles say it themselves */
+.eyebrow{display:block!important;font-size:14px!important;font-weight:var(--w-medium)!important;color:var(--text-3)!important;margin:0!important}
+.eyebrow::before{display:none!important}
+.section-head .eyebrow{display:none!important}
+
+/* ---------------------------------------------------------------- layout */
+.wrap{width:min(100% - 2*var(--gutter),var(--max))}
+.section{padding-block:var(--section)}
+.section--tight{padding-block:calc(var(--section)*.62)}
+main>section+section{border-top:1px solid var(--line-1)}
+main>.hero+section,main>.page-hero+section,main>section+.cta-final{border-top-color:var(--line-1)}
+
+/* section heads: the title on the left, the explanation on the right */
+.section-head{max-width:none;margin-bottom:clamp(40px,5vw,72px)}
+.section-head:not(.centered):has(.lead){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px clamp(32px,5vw,96px);align-items:end}
+.section-head h2{max-width:17ch}
+.section-head .lead{margin:0!important;max-width:40ch;font-size:clamp(17px,1.55vw,22px);line-height:1.4;color:var(--text-2)}
+.section-head.centered{text-align:center}.section-head.centered h2{margin-inline:auto;max-width:20ch}.section-head.centered .lead{margin:18px auto 0!important}
+@media (max-width:900px){.section-head:not(.centered):has(.lead){grid-template-columns:1fr}}
+.section-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 28px;margin-top:clamp(28px,3vw,44px)}
+
+.arrow-link{gap:6px;font-size:14.5px;font-weight:var(--w-medium);color:var(--text-2);transition:color var(--hl-out)}
+.arrow-link:hover{color:var(--text-1);transition-duration:var(--hl-in)}
+.arrow-link svg{width:15px;height:15px}
+.crumbs{font-size:13px;margin-bottom:clamp(28px,4vw,48px)}
+.crumbs a{color:var(--text-3)}.crumbs a:hover{color:var(--text-1)}
+.crumbs li[aria-current]{color:var(--text-4)}
+.crumbs li+li::before{color:var(--text-4)}
+
+/* ---------------------------------------------------------------- buttons */
+.btn{--h:40px;min-height:var(--h);padding:0 16px;gap:8px;border-radius:var(--r-3);border:1px solid transparent;font:var(--w-medium) 14px/1 var(--font);letter-spacing:-.01em;
+  clip-path:none!important;filter:none!important;transition:background var(--hl-out) var(--ease-out-quad),border-color var(--hl-out),color var(--hl-out),transform .16s var(--ease-out-quad)}
+.btn::before,.btn::after{content:none!important;display:none!important}
+.btn:hover{transition-duration:var(--hl-in),var(--hl-in),var(--hl-in),.16s}
+.btn:active{transform:scale(.97)}
+.btn svg{width:16px;height:16px}
+.btn--primary{background:#e6e6e7!important;color:#08090a!important;border-color:#e6e6e7!important;
+  box-shadow:0 1px 1px rgba(0,0,0,.07),0 3px 2px rgba(0,0,0,.04),inset 0 -1px 0 rgba(0,0,0,.1)!important}
+.btn--primary:hover{background:#fff!important;border-color:#fff!important}
+.btn--primary:focus-visible{outline:2px solid var(--violet-200);outline-offset:2px}
+.btn--secondary{background:rgba(255,255,255,.05)!important;color:var(--text-1)!important;border-color:transparent!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.07),0 0 0 1px rgba(0,0,0,.55)!important}
+.btn--secondary:hover{background:rgba(255,255,255,.09)!important}
+.btn--ghost{background:none;color:var(--text-3);padding:0 10px}.btn--ghost:hover{color:var(--text-1)}
+.btn--small{--h:32px;padding:0 12px;font-size:13px;border-radius:var(--r-2)}
+.hero .btn:not(.btn--small),.page-hero .btn:not(.btn--small),.cta-final .btn{--h:44px;padding:0 20px;font-size:15px}
+.hero__cta{gap:10px}
+.hero__note{gap:8px 20px;font-size:13.5px;color:var(--text-3);margin-top:18px}
+.hero__note svg{width:15px;height:15px;color:var(--text-4)}
+
+/* ---------------------------------------------------------------- header */
+.nav{height:var(--nav-h);background:transparent;border-bottom:1px solid transparent;transition:background .2s var(--ease-out-quad),border-color .2s var(--ease-out-quad)}
+.nav[data-scrolled=true]{background:var(--glass-nav)!important;-webkit-backdrop-filter:blur(20px)!important;backdrop-filter:blur(20px)!important;border-bottom-color:var(--line-2);box-shadow:none!important}
+.nav::after,.nav[data-scrolled=true]::after{display:none!important}
+.nav__inner{gap:20px}
+.brand{font-size:13.5px;font-weight:var(--w-semibold);letter-spacing:.16em;gap:9px}
+.brand__mark{width:22px;height:22px}
+.brand__product{font-weight:var(--w-medium);letter-spacing:-.01em;color:var(--text-3);font-size:14px}
+.nav__links{gap:0;margin-left:auto}
+.nav__link{height:32px;padding:0 11px;font-size:13.5px;font-weight:var(--w-regular);color:var(--text-3);border-radius:var(--r-2);background:none!important;transition:color var(--hl-out)}
+.nav__link:hover,.nav__link[aria-expanded=true],.nav__link[aria-current=page]{color:var(--text-1);transition-duration:var(--hl-in)}
+.nav__link svg{width:12px;height:12px;opacity:.6}
+.nav__actions{margin-left:14px;gap:4px;padding-left:14px;border-left:1px solid var(--line-2)}
+.nav__search{height:32px!important;padding:0 10px!important;gap:8px!important;border:0!important;border-radius:var(--r-2)!important;background:none!important;color:var(--text-3)!important;font-size:13.5px!important;box-shadow:none!important}
+.nav__search:hover{color:var(--text-1)!important;background:rgba(255,255,255,.05)!important}
+.nav__search kbd{font:500 11px/1 var(--code)!important;padding:3px 5px!important;border-radius:4px!important;border:1px solid var(--line-2)!important;background:none!important;color:var(--text-4)!important}
+@media (max-width:1100px){.nav__actions{margin-left:auto;border-left:0;padding-left:0}}
+.mega{background:var(--bg-1)!important;border:1px solid var(--line-2)!important;border-radius:var(--r-4)!important;box-shadow:0 24px 60px -12px rgba(0,0,0,.8),0 0 0 1px rgba(0,0,0,.6)!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;padding:8px!important}
+.mega__item{padding:10px 12px;border-radius:var(--r-3);transition:background var(--hl-out)}
+.mega__item:hover,.mega__item:focus-visible{background:rgba(255,255,255,.04);transition-duration:var(--hl-in)}
+.mega__icon{width:30px!important;height:30px!important;border-radius:7px!important;border:1px solid var(--line-2)!important;background:var(--bg-2)!important;color:var(--text-2)!important}
+.mega__title{font-size:14px;font-weight:var(--w-medium)}
+.mega__desc{font-size:13px;color:var(--text-3)}
+.mega__foot{border-top-color:var(--line-1)}
+.drawer{background:var(--bg-0)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.drawer__group>button,.drawer__single{font-size:17px;font-weight:var(--w-medium)}
+
+/* ---------------------------------------------------------------- inner page heroes: the title, then the picture
+   Linear's feature pages open with one large title and set the product picture underneath, full width, on a stage lit
+   from above. The two-column hero becomes that: copy first (title left, explanation right on wide screens), the visual
+   on its stage below. */
+.page-hero{padding:clamp(36px,5vw,72px) 0 clamp(56px,7vw,104px)}
+.page-hero .duo{display:block}
+.page-hero .hero__copy{max-width:none}
+.page-hero h1{font-size:var(--fs-display);max-width:17ch;margin:14px 0 0!important}
+.page-hero .lead{max-width:46ch;margin-top:22px!important;font-size:clamp(17px,1.4vw,20px);line-height:1.5;color:var(--text-3)}
+.page-hero .hero__cta{margin-top:30px}
+@media (min-width:1101px){
+  .page-hero .hero__copy{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);column-gap:clamp(40px,6vw,120px);align-items:end}
+  .page-hero .hero__copy>*{grid-column:1}
+  .page-hero .hero__copy>.lead{grid-column:2;grid-row:1/span 2;align-self:end;margin:0!important;padding-bottom:6px}
+}
+.page-hero .hero__visual{position:relative;min-height:0!important;margin-top:clamp(48px,6vw,80px)}
+.page-hero .hero__visual>*{max-width:1040px;margin-inline:auto}
+
+/* the stage: a framed panel lit from above, its top-right corner cut by the blade (a violet hairline marks the cut) */
+.page-hero .hero__visual,.lx-stage{padding:clamp(28px,4.4vw,72px) clamp(16px,4vw,64px) clamp(28px,3.6vw,56px);border:1px solid var(--line-2);border-radius:var(--r-5);
+  background:radial-gradient(70% 70% at 50% -8%,rgba(156,160,170,.24),rgba(120,122,130,.07) 42%,transparent 72%),linear-gradient(180deg,#0e0f11,#09090b 70%);
+  clip-path:polygon(0 0,calc(100% - var(--blade)) 0,100% var(--blade),100% 100%,0 100%)}
+.page-hero .hero__visual::after,.lx-stage::after{content:"";position:absolute;top:0;right:0;width:var(--blade);height:var(--blade);pointer-events:none;
+  background:linear-gradient(to bottom left,transparent calc(50% - 1px),rgba(185,173,255,.85) 50%,transparent calc(50% + 1px))}
+.lx-stage{position:relative}
+
+/* ---------------------------------------------------------------- panels and cards: one material, hierarchy by size
+   A panel is the next level up from the canvas with a hairline; it lightens at once under the pointer and settles back
+   over .15s. No coloured glass, no glow, no shadow under every card. */
+.glass,.glass--ambient,.glass--elevated,.glass--intel{background:var(--bg-1)!important;border:1px solid var(--line-2)!important;border-radius:var(--r-4);box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.glass--edge::before{display:none!important}
+.orient a,.pf__item,.index-list a,.rel__item,.cx__item,.across__item,.venture,.ctrl li,.facts>div,.fnd__item{transition:background var(--hl-out),border-color var(--hl-out)}
+.orient a,.fnd__item{background:var(--bg-1)!important;border:1px solid var(--line-2)!important;border-radius:var(--r-4)!important;box-shadow:none!important}
+.orient a:hover,.index-list a:hover,.rel__item:hover,.cx__item:hover,.across__item:hover{background:var(--bg-2)!important;border-color:var(--line-3)!important;transition-duration:var(--hl-in)}
+.orient .ic,.ctrl__ic,.facts .ic,.fnd__item .ic,.pf__ic,.trust-strip__ic{background:var(--bg-3)!important;border:1px solid var(--line-2)!important;color:var(--text-2)!important;box-shadow:none!important;border-radius:var(--r-3)!important}
+.orient h3,.ctrl h3,.facts h3,.fnd__item h3{font-size:15.5px!important;font-weight:var(--w-medium)!important;letter-spacing:-.011em}
+.orient p,.ctrl p,.facts p,.fnd__item p,.pf__item span{font-size:14.5px;line-height:1.55;color:var(--text-3)!important}
+.orient__win{color:var(--text-2)!important}
+
+/* a bento: cards that share their hairlines inside one frame */
+.ctrl,.facts,.pf{gap:1px!important;border:1px solid var(--line-2);border-radius:var(--r-4);overflow:hidden;background:var(--line-2)!important}
+.ctrl>li,.facts>div,.pf>.pf__item{border:0!important;border-radius:0!important;background:var(--bg-0)!important;padding:clamp(20px,2.4vw,32px)!important;box-shadow:none!important}
+.pf>.pf__item:hover{background:var(--bg-1)!important;transition-duration:var(--hl-in)}
+
+/* strips of facts: plain words on hairlines */
+.trust-strip,.proof,.proof-strip{gap:0!important;border-top:1px solid var(--line-2)!important;border-bottom:1px solid var(--line-2)!important;background:none!important;border-radius:0!important}
+.trust-strip li,.proof li,.proof-strip>div{background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+.trust-strip li+li,.proof li+li,.proof-strip>div+div{border-left:1px solid var(--line-1)!important}
+.proof b,.proof-strip .v{font-weight:var(--w-medium)!important;letter-spacing:-.022em}
+.proof span,.proof-strip .l{color:var(--text-3)!important}
+
+/* chips, tags and states */
+.chip,.tag{border-radius:var(--r-2)!important;border:1px solid var(--line-2)!important;background:rgba(255,255,255,.02)!important;color:var(--text-2)!important}
+.chip small{color:var(--text-4)!important}
+.state{border-radius:var(--r-2)!important;letter-spacing:0!important;text-transform:none!important}
+
+/* claim labels: a quiet line of text; the small shape says which kind */
+.claim{height:auto!important;padding:0!important;border:0!important;background:none!important;border-radius:0!important;font-size:12.5px!important;font-weight:var(--w-medium)!important;color:var(--text-3)!important;gap:7px!important}
+.claim::before{width:6px!important;height:6px!important}
+.claim--illustrative::before{border:1px solid var(--text-3)!important;background:none!important}
+.claim--capability::before{background:var(--violet-400)!important}
+.claim--fact::before{background:var(--text-2)!important}
+
+/* tables */
+.table thead th,table thead th{font-size:13px!important;font-weight:var(--w-medium)!important;color:var(--text-3)!important;background:none!important;border-bottom:1px solid var(--line-2)!important}
+.table td,.table th,table td{border-color:var(--line-1)!important}
+.table tbody tr{transition:background var(--hl-out)}.table tbody tr:hover{background:rgba(255,255,255,.02);transition-duration:var(--hl-in)}
+
+/* questions */
+.faq details{border-color:var(--line-2)!important;background:none!important;border-radius:0!important}
+.faq summary{font-size:16px;font-weight:var(--w-medium);letter-spacing:-.011em}
+.faq .answer p{color:var(--text-3);font-size:15px;line-height:1.65}
+
+/* prose and guides */
+.prose{font-size:16px;line-height:1.7}
+.prose p,.prose li{color:var(--text-3)}
+.prose h2{font-size:clamp(24px,2.1vw,30px);letter-spacing:-.018em}
+.prose li::before{background:var(--text-4)!important}
+
+/* forms */
+input,select,textarea{font-family:var(--font)}
+input:not([type=range]):not([type=checkbox]):not([type=radio]),select,textarea{background:var(--bg-1)!important;border:1px solid var(--line-2)!important;border-radius:var(--r-3)!important;color:var(--text-1)}
+input:not([type=range]):focus,select:focus,textarea:focus{border-color:var(--line-4)!important;box-shadow:0 0 0 3px rgba(115,87,255,.22)!important}
+
+/* ---------------------------------------------------------------- product windows (the live scenes and screens)
+   No window dots, no decorative slash: a hairline frame on the next panel level, its title bar quiet, the corner cut
+   by the blade exactly as on the stages. */
+.oz-win,.app,.shot__frame,.pc-win,.portal-frame{border:1px solid var(--line-3)!important;border-radius:var(--r-4)!important;background:linear-gradient(180deg,#111214,#0c0d0e)!important;
+  box-shadow:0 0 0 1px rgba(0,0,0,.55),0 30px 80px -30px rgba(0,0,0,.85)!important;clip-path:polygon(0 0,calc(100% - var(--blade)) 0,100% var(--blade),100% 100%,0 100%)}
+.oz-win::after{content:""!important;position:absolute;top:0;right:0;width:var(--blade)!important;height:var(--blade)!important;
+  background:linear-gradient(to bottom left,transparent calc(50% - 1px),rgba(185,173,255,.8) 50%,transparent calc(50% + 1px))!important}
+.oz-win__dots,.app__dots{display:none!important}
+.oz-win__bar{height:40px;padding:0 16px;font-size:13px;border-bottom-color:var(--line-2)!important}
+.oz-win__bar b{font-weight:var(--w-medium)}
+.oz-win__body{background-image:none!important}
+
+/* home chapters: Linear's section skeleton without the ledger ruler; the features index closes each one */
+.pch__rule{display:none!important}
+.pch{padding-block:var(--section)!important}
+.pch__t{font-size:var(--fs-h2)!important;letter-spacing:-.022em!important;max-width:14ch}
+.pch__head{align-items:end!important}
+.pch__head .lead{font-size:clamp(17px,1.55vw,22px)!important;line-height:1.4!important;color:var(--text-2)!important;max-width:38ch}
+.pch__stage{margin-top:clamp(48px,6vw,88px)!important}
+.pch__cap{margin-top:16px!important;display:flex;gap:10px;align-items:center;font-size:12.5px;color:var(--text-4)}
+.pch__cap>span:last-child{color:var(--text-4)}
+.pch__foot{margin-top:clamp(40px,5vw,64px)!important;padding-top:0!important;border-top:0!important}
+.pch__foot .fig{font-size:13.5px!important;color:var(--text-3)!important}
+.pch__feats a{font-size:14px;color:var(--text-2);font-weight:var(--w-medium)}
+.pch__feats a span{color:var(--text-4);margin-left:6px}
+.pch__feats a:hover{color:var(--text-1)}
+.pch__entry{border-left-color:var(--line-2)!important}
+.pch__entry span:last-child{color:var(--text-3)}
+
+/* prices */
+.price-row{gap:1px!important;background:var(--line-2)!important;border:1px solid var(--line-2)!important;border-radius:var(--r-4)!important;overflow:hidden}
+.price-row a{background:var(--bg-0)!important;border:0!important;border-radius:0!important;box-shadow:none!important;transition:background var(--hl-out)}
+.price-row a:hover{background:var(--bg-1)!important;transition-duration:var(--hl-in)}
+.price-row a.featured{background:linear-gradient(180deg,rgba(115,87,255,.07),transparent 60%),var(--bg-0)!important}
+.price-row a.featured::before{background:var(--violet-400)!important;height:1px!important}
+.price-row .pr{font-weight:var(--w-medium)!important;letter-spacing:-.025em!important}
+.plan,.plan-card{background:var(--bg-1)!important;border:1px solid var(--line-2)!important;border-radius:var(--r-4)!important;box-shadow:none!important}
+.billing{border:1px solid var(--line-2)!important;background:var(--bg-1)!important;border-radius:var(--r-3)!important;padding:3px!important}
+.billing button{border-radius:var(--r-2)!important;font-size:13.5px!important;font-weight:var(--w-medium)!important}
+.billing button[aria-pressed=true]{background:#e6e6e7!important;color:#08090a!important}
+
+/* ---------------------------------------------------------------- closing call to action and footer */
+.cta-final{padding-block:clamp(120px,14vw,200px)!important}
+.cta-final::before{display:none!important}
+.cta-final h2{font-size:clamp(40px,5vw,72px)!important;line-height:1.02!important;letter-spacing:-.022em!important;max-width:14ch}
+.cta-final .lead{color:var(--text-3)!important;font-size:clamp(16px,1.3vw,19px)!important}
+.hero__note--center{margin-inline:auto;max-width:none;justify-content:center}
+.footer{padding:clamp(56px,6vw,80px) 0 40px!important;background:none!important;border-top:1px solid var(--line-1)}
+.footer::before{display:none!important}
+.footer h2{font-size:13px!important;font-weight:var(--w-medium)!important;color:var(--text-1)!important;margin-bottom:18px!important}
+.footer ul{gap:11px!important}
+.footer a{font-size:13.5px!important;color:var(--text-3)!important;transition:color var(--hl-out)}
+.footer a:hover{color:var(--text-1)!important;transition-duration:var(--hl-in)}
+.footer__brand p{font-size:13.5px!important;color:var(--text-4)!important;line-height:1.6}
+.footer__bottom{border-top-color:var(--line-1)!important;font-size:13px!important;color:var(--text-4)!important}
+.status-pill{background:none!important;border:0!important;padding:0!important}
+.sticky-cta{background:rgba(15,16,17,.92)!important;border:1px solid var(--line-2)!important;border-radius:var(--r-4)!important;box-shadow:0 20px 50px -10px rgba(0,0,0,.8)!important}
+.across{border-top:1px solid var(--line-1)}
+.across__item{background:none!important;border:1px solid var(--line-2)!important;border-radius:var(--r-3)!important}
+
+@media (forced-colors:active){.page-hero .hero__visual,.lx-stage,.oz-win{clip-path:none}}
+
+/* ---------------------------------------------------------------- live visuals: one window style for every stage */
+.stage--frame{border:1px solid var(--line-3)!important;background:linear-gradient(180deg,#111214,#0b0c0d)!important;border-radius:var(--r-4)!important;
+  box-shadow:0 0 0 1px rgba(0,0,0,.55),0 30px 80px -30px rgba(0,0,0,.85);clip-path:polygon(0 0,calc(100% - var(--blade)) 0,100% var(--blade),100% 100%,0 100%)}
+.stage--frame::after{background:linear-gradient(to bottom left,transparent calc(50% - 1px),rgba(185,173,255,.8) 50%,transparent calc(50% + 1px))!important;
+  inset:0 0 auto auto!important;width:var(--blade)!important;height:var(--blade)!important}
+.viz__panel{background:rgba(255,255,255,.015)!important;border-top-color:var(--line-2)!important}
+.viz-hint{font:var(--w-medium) 12px/1 var(--font)!important;letter-spacing:0!important;text-transform:none!important;border-radius:var(--r-2);background:rgba(15,16,17,.9)!important}
+.viz-choices button{border-radius:var(--r-2)!important;background:var(--bg-1)!important;border-color:var(--line-2)!important}
+.viz-choices button[aria-pressed=true]{background:rgba(255,255,255,.08)!important;border-color:var(--line-4)!important;color:var(--text-1)!important}
+.fig-code::before{border-color:var(--text-3)!important}
+.page-hero .hero__visual>*{width:100%}
+.page-hero .hero__visual .stage__caption{max-width:1040px;margin:16px auto 0}
+
+/* the two-column section head only where it spans the page; inside a column the head stacks */
+.section-head:not(.centered):has(.lead){display:block}
+.wrap>.section-head:not(.centered):has(.lead){display:grid}
+.section-head:not(.centered) .lead{margin-top:18px!important}
+.wrap>.section-head:not(.centered):has(.lead) .lead{margin:0!important}
+@media (max-width:900px){.wrap>.section-head:not(.centered):has(.lead){display:block}.wrap>.section-head .lead{margin-top:18px!important}}
+
+/* step-by-step walkthroughs: neutral steps; the steps Xevrion takes carry the violet signal, the ones you take are white */
+.stf__node{background:var(--bg-1)!important;border:1px solid var(--line-2)!important;box-shadow:none!important;border-radius:var(--r-4)!important}
+.stf__node--end{background:none!important;border-style:dashed!important;border-color:var(--line-3)!important}
+.stf__node--finish{border-style:solid!important;border-color:var(--line-4)!important;background:var(--bg-2)!important}
+.stf__who{border:0!important;background:none!important;padding:0!important;font:var(--w-medium) 12px/1 var(--font)!important;letter-spacing:0!important}
+.stf__node[data-who=x] .stf__who{color:var(--violet-200)!important}
+.stf__node[data-who=you] .stf__who{color:var(--amber)!important}
+.stf__num{font:500 11.5px/1 var(--code)!important;color:var(--text-4)!important}
+.stf__node p{color:var(--text-3)!important}
+.stf__out span{font-size:12px!important;color:var(--text-4)!important}
+.stf__tag{color:var(--text-3)!important;font-size:12.5px!important}
+.stf__node + .stf__node::before{background:var(--line-3)!important;box-shadow:none!important}
+.stf__node + .stf__node::after{border-color:var(--line-4)!important}
+.stf__key span[data-who]::before{border:0!important;background:var(--violet-400)!important;border-radius:50%!important;width:7px!important;height:7px!important}
+.stf__key span[data-who=you]::before{background:var(--amber)!important}
+.page-hero .hero__visual>*{margin-inline:auto!important}
+.wrap.duo>.section-head:not(.centered):has(.lead),.wrap[class*=split]>.section-head:not(.centered):has(.lead){display:block}
+.wrap.duo>.section-head .lead,.wrap[class*=split]>.section-head .lead{margin-top:18px!important}
+.hero__note span{color:var(--text-3)}
+
+
+
+
+/* callouts: neutral panels; the violet mark stays only on the small icon of "what Xevrion is doing" */
+.explain,.answer-block,.callout,.walk__example,.ex-box{background:var(--bg-1)!important;border:1px solid var(--line-2)!important;border-radius:var(--r-3)!important;box-shadow:none!important}
+.answer-block{border-left:1px solid var(--line-2)!important}
+.explain__icon{background:var(--bg-3)!important;border:1px solid var(--line-2)!important;color:var(--violet-200)!important;box-shadow:none!important}
+@media (max-width:700px){
+  .page-hero .hero__visual{padding:0!important;border:0!important;background:none!important;clip-path:none!important;margin-top:36px}
+  .page-hero .hero__visual::after{display:none}
+  .section{padding-block:clamp(64px,16vw,88px)}
+  h1,.h1,.display{font-size:clamp(34px,9.6vw,44px)}
+}
+
+/* the atmosphere band moved to xui.css (atmosphere v2) */
+
+/* the quietest text still meets 4.5:1 on the canvas (Linear's #62666d does not) */
+:root{--text-4:#80848e}
+.page-hero h1{max-width:19ch}
+.hero--app .eyebrow{margin-bottom:22px!important}
+
+/* 5c: 44px touch targets on phones: the header's buttons and the sticky bar's close button */
+@media (max-width:760px){.nav .btn--small,.nav__actions .btn,.nav__actions .btn--small{--h:44px;min-height:44px}}
+.sticky-cta__x{width:44px;height:44px}
+
+/* 5B: every button is at least 44px tall on phones and touch screens (inline --h above 44px still wins) */
+@media (max-width:760px),(pointer:coarse){.btn,.btn.btn--small{--h:44px;min-height:var(--h)}}
+
+/* 5B: the founding-customer offer, one calm line (xw/conversion.py); the count arrives from the API or not at all */
+.founding{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin:var(--s-5) 0 0;padding:14px 18px;border:1px solid var(--line-2);border-radius:var(--r-3);font-size:14.5px;line-height:1.55;color:var(--text-2);background:rgba(255,255,255,.015)}
+.founding b{color:var(--text-1);font-weight:500}
+.founding [data-founding-n]{color:var(--violet-200)}
+.founding{max-width:none;width:fit-content}
+.founding .link{white-space:nowrap}
+.founding--compact{width:min(100%,520px);margin:0;font-size:14px}
+.inv-wrap .arr--steps{width:min(100%,520px)}
+.inv-wrap .arr__steps{grid-template-columns:minmax(0,1fr)}
+.arr__steps b{display:block;margin-bottom:2px}
+.wk-form .form__row{align-items:start}
+
+/* 5B: arrivals from an outreach email (src/js/arrive.js) */
+.arr[hidden],.arr [hidden]{display:none!important}
+.arr--line{width:min(100%,520px)}
+.wk--report .arr--line{width:auto;max-width:880px;margin-bottom:var(--s-4)}
+.arr__line{margin:0;font-size:15px;line-height:1.55;color:var(--text-2);text-wrap:pretty}
+.arr__line b{color:var(--text-1);font-weight:500}
+.arr--steps{width:min(100%,880px)}
+.wk--report .arr--steps{margin-top:var(--s-6)}
+.arr__h{margin:0}
+.arr__steps{margin-top:var(--s-4)}
+
+/* 5B: /check, three things you can check */
+.ck-ways{list-style:none;margin:var(--s-5) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-4)}
+.ck-ways li{display:flex;flex-direction:column;gap:8px;padding:20px;border:1px solid var(--line-2);border-radius:var(--r-3);color:var(--text-2);font-size:15px;line-height:1.5}
+.ck-ways svg{color:var(--violet-200)}
+.ck-ways h3{margin:4px 0 0;font-size:17px;font-weight:500;letter-spacing:-.01em;color:var(--text-1)}
+.ck-ways p{margin:0}
+.ck-ways .ck-ways__where{margin-top:auto;padding-top:6px;font-size:13.5px;color:var(--text-3)}
+.ck-ways .link{display:inline-flex;align-items:center;min-height:44px;color:var(--text-1)}
+@media (max-width:860px){.ck-ways{grid-template-columns:minmax(0,1fr)}}
+
+/* 5B: service pages, the start row and what the service needs */
+.svc-go .hero__cta{margin:0}
+.svc-need{margin:var(--s-4) 0 0;font-size:15px;color:var(--text-2)}
+.svc-need b{color:var(--text-1);font-weight:500}
